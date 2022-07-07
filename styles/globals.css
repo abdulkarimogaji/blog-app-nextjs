@@ -147,6 +147,43 @@ header a:hover {
   color: var(--link-hover-clr);
 }
 
+.search-bar {
+  justify-self: center;
+  margin: 1rem auto;
+  color: black;
+  width: 80%;
+  position: relative;
+}
+
+.search-bar input {
+  width: 100%;
+  border-radius: 5px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.2rem;
+  padding-right: 1rem;
+  border: none;
+  background-color: #eee;
+  transition: 250ms;
+}
+
+.search-bar input:focus, .search-bar input:hover {
+  outline: none;
+  background-color: white;
+}
+
+.search-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  color: var(--primary-clr);
+  transition: 250ms;
+}
+
+.search-btn:hover, .search-btn:focus {
+  color: var(--link-hover-clr);
+}
+
 
 @media screen and (min-width: 800px) {
   header {
@@ -182,6 +219,10 @@ header a:hover {
     grid-column: 5 / span 1;
     margin-bottom: 0;
   }
+
+  .search-bar {
+    margin: 0 auto;
+  }
 }
 
 .flex-center {
@@ -200,3 +241,5 @@ header a:hover {
 .timestamp-ol a:hover {
   color: var(--link-hover-clr);
 }
+
+

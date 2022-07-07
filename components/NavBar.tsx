@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 const NavBar = () => {
   return (
@@ -14,46 +17,23 @@ const NavBar = () => {
         <span></span>
       </label>
       <nav>
-        <ul>
-          <li>
-            <Link href="/" passHref>
-              <a>Home</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/list">
-              <a>Blogs</a>
-            </Link>
-          </li>
-          <li>
-            <a
-              href="https://github.com/AbdulkarimOgaji/automart"
-              target="_blank"
-              rel="noreferrer"
-            >
-               About
-            </a>
-          </li>
-          <li>
-            <Link href="/dashboard">
-              <a>Team</a>
-            </Link>
-          </li>
-        </ul>
-        
+        <div className="search-bar">
+          <input type="text" placeholder="Search Blogs"/>
+          <button className="search-btn" onClick={() => console.log("clicked")}><FontAwesomeIcon icon={faSearch} /></button>
+        </div>
       </nav>
       <ul className="nav-auth">
-            <li>
-                <a href="https://google.com">
-                Login
-                </a>
-            </li>
-            <li>
-                <a href="https://google.com">
-                Signup
-                </a>
-            </li>
-        </ul>
+        <li>
+          <a href="https://google.com">
+            Login
+          </a>
+        </li>
+        <li>
+          <a href="https://google.com">
+            Signup
+          </a>
+        </li>
+      </ul>
     </header>
   );
 };
