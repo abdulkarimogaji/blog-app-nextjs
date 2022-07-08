@@ -4,13 +4,13 @@ const BlogDetail = () => {
   return (
     <section className="navbar-offset">
       <div className="flex-center">
-        <div className="relative w-3/4" style={{ height: "30rem" }}>
-          <Image src="/cover_img.jpg" alt="cover_img" layout="fill" />
+        <div className="relative md:w-3/4 w-4/5 h-64 md:h-96">
+          <Image src="/cover_img.jpg" alt="cover_img" layout="fill" objectFit="cover" />
         </div>
       </div>
       {/* blog title */}
       <div className="text-center">
-        <h1 className="text-5xl text-center my-8 px-80 leading-relaxed">
+        <h1 className="md:text-5xl text-2xl text-center md:my-8 my-5 md:px-80 px-10 leading-relaxed">
           These Are The 10 Most Beautiful Blog Designs In The World
         </h1>
         <div className="flex-center mb-2">
@@ -31,11 +31,11 @@ const BlogDetail = () => {
 
       {/* blog content */}
       <div className="flex-center">
-        <div className="w-3/4">
+        <div className="w-3/4 md:w-4/5">
           {/* Intro */}
-          <section className="my-16 px-32">
+          <section className="md:my-16 my-8 md:px-32 px-4 ">
             <h2></h2>
-            <p className="text-xl leading-relaxed">
+            <p className="md:text-xl text-base leading-relaxed">
               It’s no secret that blogs are the pillar of any successful company
               website. A frequently updated blog will drive traffic to the
               brand, guide users with targeted content, and act as a vital tool
@@ -61,7 +61,7 @@ const BlogDetail = () => {
               Without further ado, let’s jump right in!
             </p>
             {/* timestamps */}
-            <ol className="flex flex-col gap-6 text-xl my-8 pl-6 timestamp-ol">
+            <ol className="flex flex-col md:gap-6 gap-3 md:text-xl text-base md:my-8 my-4 md:pl-6 pl-3 timestamp-ol">
               <li>
                 <a href="https://google.com">Six Two</a>
               </li>
@@ -88,9 +88,9 @@ const BlogDetail = () => {
           </section>
 
           {/* Body 1 */}
-          <section className="my-16 px-32">
-            <h2 className="text-5xl mb-8">1. Six Two</h2>
-            <p className="text-xl leading-relaxed">
+          <section className="md:my-16 my-8 md:px-32 px-4">
+            <h2 className="md:text-5xl text-lg md:mb-8 mb-4">1. Six Two</h2>
+            <p className="md:text-xl text-base leading-relaxed">
               Powered by the global youth travel brand Contiki, Six-Two boasts
               robust travel guides jam-packed with gorgeous imagery that
               instantly makes us want to pack our bags and set off for some
@@ -105,8 +105,8 @@ const BlogDetail = () => {
               has managed to strike a perfect balance between fun and
               informative.
             </p>
-            <div className="flex-center my-16">
-              <div className="relative w-3/4 h-96">
+            <div className="flex-center md:my-16 my-8">
+              <div className="relative md:w-3/4 w-4/5 md:h-96 h-40">
                 <Image
                   src="/example_blog_img.jpg"
                   alt="example"
@@ -117,9 +117,9 @@ const BlogDetail = () => {
           </section>
           {/* author details */}
           <div className="flex-center">
-            <div className="rounded-lg bg-gray-200 w-2/3 p-8 flex gap-6">
+            <div className="rounded-lg bg-gray-200 md:w-2/3 container md:p-8 p-4 md:text-base text-sm flex md:gap-6 gap-3">
               <div className="flex-center">
-                <div className="relative w-20 h-20">
+                <div className="relative md:w-20 md:h-20 h-10 w-10">
                   <Image
                     src="/user_avatar.jpeg"
                     alt="user_avatar"
