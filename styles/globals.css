@@ -5,6 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 ol {
   list-style-type: decimal ;
 }
@@ -14,16 +15,16 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Anek Latin', sans-serif;
+  background-color: #eee;
 }
 
 .navbar-offset {
-  margin-top: 4rem;
-  padding: 2rem;
+  margin-top: 16rem;
 }
 
 :root {
   --primary-clr: #223c50;
-  --link-hover-clr: #54d0c6;
+  --link-hover-clr: hsl(16, 100%, 66%);
 }
 
 * {
@@ -183,9 +184,13 @@ header a:hover {
 .search-btn:hover, .search-btn:focus {
   color: var(--link-hover-clr);
 }
-
-
+.my-center {
+  margin: 0 auto;
+}
 @media screen and (min-width: 800px) {
+  .navbar-offset {
+    margin-top: 4rem;
+  }
   header {
     display: grid;
     grid-template-columns: 1fr 1fr 2.5fr 1fr 2fr 1fr;
@@ -243,3 +248,25 @@ header a:hover {
 }
 
 
+.link-hover {
+  transition: 250ms;
+}
+
+.link-hover:hover, .link-hover:focus {
+  color: var(--link-hover-clr);
+}
+
+.btn-hover-container > * {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid white;
+
+}
+.btn-hover-container > div:hover,
+.btn-hover-container > button:hover,
+.btn-hover-container > div:focus,
+.btn-hover-container > button:focus
+{
+  border-color: #eee;
+  border-radius: 5px;
+  background-color: rgba(238, 238, 238, 0.3);
+}

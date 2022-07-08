@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const NavBar = () => {
   return (
     <header className="navBar">
-      <h1 className="logo text-3xl">BLOGNADO</h1>
+      <h1 className="logo"><Link href="/" passHref><a className="text-3xl">BLOGNADO</a></Link></h1>
       <input
         type="checkbox"
         name="nav-toggler"
@@ -18,7 +18,7 @@ const NavBar = () => {
       </label>
       <nav>
         <div className="search-bar">
-          <input type="text" placeholder="Search Blogs"/>
+          <input type="text" placeholder="Search Blogs" />
           <button className="search-btn" onClick={() => console.log("clicked")}><FontAwesomeIcon icon={faSearch} /></button>
         </div>
       </nav>
