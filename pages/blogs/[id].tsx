@@ -1,8 +1,9 @@
 import Image from "next/image";
+import SingleComment from "../../components/SingleComment";
 
 const BlogDetail = () => {
   return (
-    <section className="navbar-offset">
+    <section className="navbar-offset bg-white">
       <div className="flex-center">
         <div className="relative md:w-3/4 w-4/5 h-64 md:h-96">
           <Image src="/cover_img.jpg" alt="cover_img" layout="fill" objectFit="cover" />
@@ -117,7 +118,7 @@ const BlogDetail = () => {
           </section>
           {/* author details */}
           <div className="flex-center">
-            <div className="rounded-lg bg-gray-200 md:w-2/3 container md:p-8 p-4 md:text-base text-sm flex md:gap-6 gap-3">
+            <div className="rounded-lg bg-gray-200 md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
               <div className="flex-center">
                 <div className="relative md:w-20 md:h-20 h-10 w-10">
                   <Image
@@ -141,6 +142,35 @@ const BlogDetail = () => {
                 </p>
               </div>
             </div>
+          </div>
+          {/* Comments Section */}
+          <a href="#comments"></a>
+          <div className="flex flex-col items-center md:my-32 my-16">
+            <h1 className="md:text-3xl text-lg mb-16">Comments(12)</h1>
+            <div className="flex-center container">
+              <div className="rounded-lg md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
+                <div className="flex-center">
+                  <div className="relative md:w-15 md:h-15 h-7 w-7">
+                    <Image
+                      src="/user_avatar.jpeg"
+                      alt="user_avatar"
+                      layout="fill"
+                      style={{ borderRadius: 999 }}
+                    />
+                  </div>
+                </div>
+                <div className="container">
+                  <textarea placeholder="Write Comment" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+                  <button type="submit" className="p-2 px-4 text-xs action-btn rounded-lg block">Submit</button>
+
+                </div>
+
+              </div>
+            </div>
+            <SingleComment />
+            <SingleComment />
+            <SingleComment />
+            <SingleComment />
           </div>
         </div>
       </div>
