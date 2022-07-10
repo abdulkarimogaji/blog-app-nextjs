@@ -30,21 +30,21 @@ const Create = () => {
   }
 
   return (
-    <div className="navbar-offset p-16">
-      <h1 className="text-3xl mb-16">New Blog By <strong>The coding Mermaid</strong></h1>
-      <form className="w-4/5 my-center" onSubmit={handleSubmit}>
-        <section className="bg-white p-8 border border-gray-300 rounded-lg my-8">
+    <div className="navbar-offset md:p-16 p-8">
+      <h1 className="text-lg md:text-3xl md:mb-16 mb-8">New Blog By <strong>The coding Mermaid</strong></h1>
+      <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
+        <section className="bg-white md:p-8 p-4 border border-gray-300 rounded-lg my-8">
           <input type="checkbox" id="isAnonymous" className="toggle" ref={isAnonymous}/>
           <label htmlFor="isAnonymous" className="my-8 w-16"></label>
-          <p className="my-2 mb-16">Write as anonymous</p>
-          <h2 className="text-2xl mb-16">Introduction</h2>
+          <p className="my-2 md:mb-16 mb-8">Write as anonymous</p>
+          <h2 className="md:text-lg text-base md:text-2xl md:mb-16 mb-8">Introduction</h2>
           <div className="my-12">
-            <p className="text-lg font-semibold mb-4">Blog Title*</p>
-            <input type="text" placeholder="Blog Title" name="introTitle" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 text-lg outline-none" />
+            <p className="md:text-lg text-base font-semibold mb-4">Blog Title*</p>
+            <input type="text" placeholder="Blog Title" name="introTitle" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
           </div>
           <div className="my-12">
-            <p className="text-lg font-semibold mb-4">Content</p>
-            <textarea placeholder="Content" name="introContent" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 text-lg outline-none" />
+            <p className="md:text-lg text-base font-semibold mb-4">Content</p>
+            <textarea placeholder="Content" name="introContent" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
           </div>
         </section>
         {
