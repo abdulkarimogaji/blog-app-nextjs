@@ -24,14 +24,10 @@ const NavBar = () => {
       </nav>
       <ul className="nav-auth">
         <li>
-          <a href="https://google.com">
-            Login
-          </a>
+          <Link href="/login" passHref><a>Login</a></Link>
         </li>
         <li>
-          <a href="https://google.com">
-            Signup
-          </a>
+        <Link href="/signup" passHref><a>Signup</a></Link>
         </li>
       </ul>
     </header>
