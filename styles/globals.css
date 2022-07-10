@@ -48,6 +48,13 @@ header {
   color: white;
 }
 
+.bg-mybg {
+  background-color: hsl(206, 40%, 82%);
+}
+
+.bg-myborder {
+  border-color: hsl(206, 40%, 82%);
+}
 .logo {
   font-family: 'Fontdiner Swanky';
 }
@@ -156,6 +163,10 @@ header a:hover {
   position: relative;
 }
 
+.profile-image {
+left: -2rem
+}
+
 .search-bar input {
   width: 100%;
   border-radius: 5px;
@@ -184,6 +195,7 @@ header a:hover {
 .search-btn:hover, .search-btn:focus {
   color: var(--link-hover-clr);
 }
+
 .my-center {
   margin: 0 auto;
 }
@@ -228,6 +240,9 @@ header a:hover {
   .search-bar {
     margin: 0 auto;
   }
+  .profile-image {
+  left: calc(50% - 4rem)
+}
 }
 
 .flex-center {
