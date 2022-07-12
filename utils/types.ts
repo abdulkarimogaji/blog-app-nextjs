@@ -12,7 +12,7 @@ type Author = {
 }
 export type Comment = {
   blog: string;
-  author: string;
+  author: Author;
   createdAt: string;
   _id: string;
   text: string;

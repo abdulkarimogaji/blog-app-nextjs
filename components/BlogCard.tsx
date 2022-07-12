@@ -4,21 +4,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { dateToMonthDay } from "../utils/date-utils"
 import { BlogType } from "../utils/types"
+import Avatar from "./Avatar"
 
 
 const BlogCard = ({ data }: { data: BlogType}) => {
   return (
     <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-4 gap-2">
-      <div className="flex-center">
-        <div className="relative md:w-10 md:h-10 w-7 h-7">
-          <Image
-            src="/user_avatar.jpeg"
-            alt="user_avatar"
-            layout="fill"
-            style={{ borderRadius: 999 }}
-          />
-        </div>
-      </div>
+      <Avatar  dimension="md:w-10 md:h-10 w-7 h-7" href={`/users/${data.author._id}`} />
       <div className="container">
         <p>{data.author.username}</p>
         <small>{dateToMonthDay(data.createdAt)}</small>
