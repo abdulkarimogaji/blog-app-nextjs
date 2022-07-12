@@ -35,3 +35,23 @@ export interface MyResponseType<T> {
     data: T
   }
 }
+
+
+export interface LoginResponse {
+  data: {
+    access_token: string;
+    user: User
+  }
+}
+
+interface User {
+  createdAt: string;
+  updatedAt: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  displayPic: string;
+  _id: string;
+  email: string;
+  description: string;
+}
