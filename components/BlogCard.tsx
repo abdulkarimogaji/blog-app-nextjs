@@ -20,7 +20,7 @@ const BlogCard = ({ data }: { data: BlogType}) => {
         </div>
       </div>
       <div className="container">
-        <p>{data.author.displayName}</p>
+        <p>{data.author.username}</p>
         <small>{dateToMonthDay(data.createdAt)}</small>
         <Link href={`/blogs/${data._id}`} passHref>
           <a className="link-hover"><h1 className="md:text-3xl text-lg font-bold my-4">{data.title}</h1></a>

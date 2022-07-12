@@ -4,7 +4,7 @@ import { createContext, ReactNode, useContext, useReducer } from "react";
 
 const initialUserData = {
   displayPic: "",
-  displayName: "",
+  username: "",
   access_token: "",
   _id: "",
   email: ""

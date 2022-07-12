@@ -11,11 +11,11 @@ const fetchBlog = (id: string) => {
 }
 const BlogDetail = () => {
   const router = useRouter()
-  const { id } = router.query
-  const { data: resp, isSuccess, error, isLoading, isError } = useQuery<MyResponseType<BlogType>>(["blogs", id], () => fetchBlog(id as string))
+  const { data: resp, isSuccess, error, isLoading, isError } = useQuery<MyResponseType<BlogType>>(["blogs", router.query.id as string], () => fetchBlog(router.query.id as string))
 
   if (isSuccess) {
     const { data: blog } = resp?.data!
+    console.log(blog)
     return (
       <section className="navbar-offset bg-white">
         <div className="flex-center">
@@ -39,7 +39,7 @@ const BlogDetail = () => {
             </div>
           </div>
           <div className="text-sm mb-4">
-            BY {blog.author.displayName}, UPDATED ON {blog.updatedAt}, 2022
+            BY {blog.author.username}, UPDATED ON {blog.updatedAt}, 2022
           </div>
           <div className="text-lg">13 Mins read</div>
         </div>
@@ -103,7 +103,7 @@ const BlogDetail = () => {
                 </div>
                 <div>
                   <strong>{blog.author.firstName} {blog.author.lastName}</strong>
-                  <p>{blog.author.displayName}</p>
+                  <p>{blog.author.username}</p>
                   <br />
                   <br />
                   <p>
