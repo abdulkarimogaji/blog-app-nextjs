@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useMutation } from "react-query"
+import Spinner from "../components/Spinner"
 import { useUserContext } from "../context/useUserContext"
 import { request } from "../utils/axios-utils"
 import { LoginResponse } from "../utils/types"
@@ -30,7 +31,7 @@ const SignUp = () => {
     mutate(cred)
   }
 
-  const { mutate  } = useMutation<LoginResponse, any, any, any>(signUp, {
+  const { mutate, isLoading } = useMutation<LoginResponse, any, any, any>(signUp, {
     onSuccess: (data) => {
       localStorage.setItem("blognado-access-token", data.data.access_token)
       dispatch({
@@ -49,6 +50,8 @@ const SignUp = () => {
       }
     }
   })
+
+  if (isLoading) return <Spinner />
 
   return (
     <div className="navbar-offset md:p-16 p-8">

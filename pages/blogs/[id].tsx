@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import Avatar from "../../components/Avatar";
 import SingleComment from "../../components/SingleComment";
+import Spinner from "../../components/Spinner";
 import { request } from "../../utils/axios-utils";
 import { dateToMonthDay } from "../../utils/date-utils";
 import { BlogType, Comment, MyResponseType } from "../../utils/types";
@@ -53,7 +54,7 @@ const BlogDetail = () => {
     }
   }
 
-  if (isLoading) return <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut aut laborum fugiat, excepturi incidunt in minima. Incidunt, eligendi cum veniam exercitationem fuga dolor eius sunt saepe optio modi obcaecati reprehenderit amet culpa illo illum, nam soluta dignissimos quidem. Nisi, sed repellat at voluptatem minus temporibus impedit. Ipsa labore quae natus, odio corporis optio, deserunt magni, laborum architecto iure a exercitationem illum eos mollitia accusamus soluta repellat quidem quisquam earum molestiae provident quos eaque cumque. Impedit culpa quo nesciunt! Cum atque eveniet dolorum ipsam obcaecati ad, fuga aliquid aspernatur ut suscipit possimus voluptatem enim culpa pariatur est laborum beatae eius ducimus!</div>
+  if (isLoading) return <Spinner />
 
   if (isSuccess) {
     const { data: blog } = resp?.data!

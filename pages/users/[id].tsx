@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 import Link from "next/link"
 import { useQuery } from "react-query"
+import Spinner from "../../components/Spinner"
 import { useUserContext } from "../../context/useUserContext"
 import { request } from "../../utils/axios-utils"
 import { dateToMonthDay } from "../../utils/date-utils"
@@ -17,8 +18,11 @@ const Profile = () => {
 
   const { userData } = useUserContext()
   console.log(userData)
-  const { data, isSuccess} = useQuery<LoginResponse>(["me"], fetchUser)
+  const { data, isSuccess, isLoading } = useQuery<LoginResponse>(["me"], fetchUser)
 
+
+  if (isLoading) return <Spinner />
+  
   if (isSuccess) {
     const { user } = data.data
     return (
