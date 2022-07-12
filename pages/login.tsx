@@ -15,7 +15,6 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [errorText, setErrorText] = useState("")
   const onSuccess = (data: any) => {
-    console.log(data)
     const cred = {
       username: data.data.user.username,
       displayPic: data.data.user.displayPic,
@@ -23,7 +22,6 @@ const Login = () => {
       _id: data.data.user._id,
       email: data.data.user.email,
     }
-    console.log("cred", cred)
     dispatch({
       type: "LOGIN",
       payload: cred
