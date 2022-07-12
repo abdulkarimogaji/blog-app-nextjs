@@ -2,9 +2,11 @@ import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 import Link from "next/link"
+import { dateToMonthDay } from "../utils/date-utils"
+import { BlogType } from "../utils/types"
 
 
-const BlogCard = () => {
+const BlogCard = ({ data }: { data: BlogType}) => {
   return (
     <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-4 gap-2">
       <div className="flex-center">
@@ -17,16 +19,16 @@ const BlogCard = () => {
           />
         </div>
       </div>
-      <div>
-        <p>The Coding Mermaid</p>
-        <small>Jul 5</small>
-        <Link href="/" passHref>
-          <a className="link-hover"><h1 className="md:text-3xl text-lg font-bold my-4">If you could add one feature to postman what will it be</h1></a>
+      <div className="container">
+        <p>{data.author.displayName}</p>
+        <small>{dateToMonthDay(data.createdAt)}</small>
+        <Link href={`/blogs/${data._id}`} passHref>
+          <a className="link-hover"><h1 className="md:text-3xl text-lg font-bold my-4">{data.title}</h1></a>
         </Link>
         <div className="flex md:gap-8 gap-4 flex-wrap btn-hover-container">
-          <button># javascript</button>
-          <button># beginners</button>
-          <button># api</button>
+          {
+            data.tags.map(tag => <button key={tag}># {tag}</button>)
+          }
         </div>
         <div className="flex md:justify-between flex-wrap md:mt-8 mt-4">
           <div className="flex btn-hover-container">

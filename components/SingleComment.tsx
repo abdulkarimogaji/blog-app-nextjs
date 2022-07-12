@@ -1,8 +1,10 @@
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
+import { dateToMonthDay } from "../utils/date-utils"
+import { Comment } from "../utils/types"
 
-const SingleComment = () => {
+const SingleComment = ({ data }: { data: Comment}) => {
   return (
     <div className="flex-center">
       <div className="rounded-lg md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
@@ -19,8 +21,8 @@ const SingleComment = () => {
         <div>
 
         <div className="md:p-6 p-3 border border-gray-300 rounded-lg md:mb-4 mb-2">
-          <strong className="mb-3 block">Abdulkarim Ogaji <span className="text-gray-400 text-sm">! Jul 9</span></strong> 
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis accusantium excepturi facere nam. Est quisquam earum porro vitae ullam voluptatem eligendi, labore ipsam impedit vero debitis neque voluptatibus eum quos.
+          <strong className="mb-3 block">Abdulkarim Ogaji <span className="text-gray-400 text-sm">! {dateToMonthDay(data.createdAt)}</span></strong> 
+          {data.text}
         </div>
         <div className="flex btn-hover-container">
             <div className="cursor-pointer">
