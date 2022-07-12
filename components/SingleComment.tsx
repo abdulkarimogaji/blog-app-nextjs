@@ -6,7 +6,7 @@ import { Comment } from "../utils/types"
 
 const SingleComment = ({ data }: { data: Comment}) => {
   return (
-    <div className="flex-center">
+    <div className="flex-center container">
       <div className="rounded-lg md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
         <div className="flex-center">
           <div className="relative md:w-15 md:h-15 h-7 w-7">

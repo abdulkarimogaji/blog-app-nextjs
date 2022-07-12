@@ -1,21 +1,40 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
+import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import SingleComment from "../../components/SingleComment";
 import { request } from "../../utils/axios-utils";
-import { BlogType, MyResponseType } from "../../utils/types";
+import { BlogType, Comment, MyResponseType } from "../../utils/types";
 
 
 const fetchBlog = (id: string) => {
   return request({ url: `/blogs/${id}` })
 }
+
+const sendComment = (body: any) => {
+  return request({ url: "/comments", method: "post", data: body })
+}
+
 const BlogDetail = () => {
   const router = useRouter()
-  const { data: resp, isSuccess, error, isLoading, isError } = useQuery<MyResponseType<BlogType>>(["blogs", router.query.id as string], () => fetchBlog(router.query.id as string))
+  const [newComment, setNewComment] = useState("")
+  const { data: resp, isSuccess } = useQuery<MyResponseType<BlogType>>(["blogs", router.query.id as string], () => fetchBlog(router.query.id as string))
+
+  const optimisticUpdate = (data: any) => {console.log("data ", data)}
+  const { mutate } = useMutation<MyResponseType<Comment>, any, any>(sendComment, {onSuccess: optimisticUpdate})
+
+  const addComment = () => {
+    if (newComment.length > 1) {
+      mutate({
+        blog: resp?.data.data._id,
+        isAnonymous: false,
+        text: newComment
+      })
+    }
+  }
 
   if (isSuccess) {
     const { data: blog } = resp?.data!
-    console.log(blog)
     return (
       <section className="navbar-offset bg-white">
         <div className="flex-center">
@@ -70,8 +89,8 @@ const BlogDetail = () => {
             {/* Body 1 */}
             {
               blog.sections.map((sec, i) => (
-                <section className="md:my-16 my-8 md:px-32 px-4">
-                  <h2 className="md:text-5xl text-lg md:mb-8 mb-4">{i}. {sec.title}</h2>
+                <section className="md:my-16 my-8 md:px-32 px-4" id={sec.title} key={sec.title}>
+                  <h2 className="md:text-5xl text-lg md:mb-8 mb-4">{i+1}. {sec.title}</h2>
                   <p className="md:text-xl text-base leading-relaxed">
                     {sec.content}
                   </p>
@@ -113,8 +132,7 @@ const BlogDetail = () => {
               </div>
             </div>
             {/* Comments Section */}
-            <a href="#comments"></a>
-            <div className="flex flex-col items-center md:my-32 my-16">
+            <div className="flex flex-col items-center md:my-32 my-16" id="comments">
               <h1 className="md:text-3xl text-lg mb-16">Comments({blog.comments.length})</h1>
               <div className="flex-center container">
                 <div className="rounded-lg md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
@@ -129,8 +147,8 @@ const BlogDetail = () => {
                     </div>
                   </div>
                   <div className="container">
-                    <textarea placeholder="Write Comment" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
-                    <button type="submit" className="p-2 px-4 text-xs action-btn rounded-lg block">Submit</button>
+                    <textarea placeholder="Write Comment" value={newComment} onChange={e => setNewComment(e.target.value)} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+                    <button type="submit" onClick={addComment} className="p-2 px-4 text-xs action-btn rounded-lg block">Submit</button>
 
                   </div>
 
