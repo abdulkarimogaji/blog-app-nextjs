@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import SingleComment from "../../components/SingleComment";
 import { request } from "../../utils/axios-utils";
 import { BlogType, Comment, MyResponseType } from "../../utils/types";
@@ -17,11 +17,29 @@ const sendComment = (body: any) => {
 
 const BlogDetail = () => {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const [newComment, setNewComment] = useState("")
-  const { data: resp, isSuccess } = useQuery<MyResponseType<BlogType>>(["blogs", router.query.id as string], () => fetchBlog(router.query.id as string))
+  const { id } = router.query
+  const { data: resp, isSuccess, isLoading } = useQuery<MyResponseType<BlogType>>(["blogs", id as string], () => fetchBlog(router.query.id as string))
 
-  const optimisticUpdate = (data: any) => {console.log("data ", data)}
-  const { mutate } = useMutation<MyResponseType<Comment>, any, any>(sendComment, {onSuccess: optimisticUpdate})
+  const { mutate } = useMutation<MyResponseType<Comment>, any, any>(sendComment,{
+    onMutate: async(newComment) => {
+      await queryClient.cancelQueries(["blogs", id])
+      const previousBlog = queryClient.getQueryData<MyResponseType<BlogType>>(["blogs", id])
+      queryClient.setQueryData<any>(["blogs", id], (prev: any) => {
+        return {
+          ...prev,
+          data: { ...prev?.data, data: { ...prev?.data.data, comments: [...prev?.data.data.comments, newComment]}}
+        }
+      })
+      setNewComment("")
+      return { previousBlog }
+    },
+    onError: (_error, _v, context: any) => {
+      queryClient.setQueryData(["blogs", id], context.previousBlog)
+    },
+    onSettled: () => {},
+  })
 
   const addComment = () => {
     if (newComment.length > 1) {
@@ -32,6 +50,8 @@ const BlogDetail = () => {
       })
     }
   }
+
+  if (isLoading) return <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut aut laborum fugiat, excepturi incidunt in minima. Incidunt, eligendi cum veniam exercitationem fuga dolor eius sunt saepe optio modi obcaecati reprehenderit amet culpa illo illum, nam soluta dignissimos quidem. Nisi, sed repellat at voluptatem minus temporibus impedit. Ipsa labore quae natus, odio corporis optio, deserunt magni, laborum architecto iure a exercitationem illum eos mollitia accusamus soluta repellat quidem quisquam earum molestiae provident quos eaque cumque. Impedit culpa quo nesciunt! Cum atque eveniet dolorum ipsam obcaecati ad, fuga aliquid aspernatur ut suscipit possimus voluptatem enim culpa pariatur est laborum beatae eius ducimus!</div>
 
   if (isSuccess) {
     const { data: blog } = resp?.data!
