@@ -4,7 +4,7 @@ type Section = {
 }
 
 type Author = {
-  displayName: string;
+  username: string;
   firstName: string;
   lastName: string;
   _id: string;

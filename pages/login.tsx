@@ -17,7 +17,7 @@ const Login = () => {
   const onSuccess = (data: any) => {
     console.log(data)
     const cred = {
-      displayName: data.data.user.displayName,
+      username: data.data.user.username,
       displayPic: data.data.user.displayPic,
       access_token: data.data.access_token,
       _id: data.data.user._id,
