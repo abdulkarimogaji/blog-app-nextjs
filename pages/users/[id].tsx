@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useQuery } from "react-query"
 import { request } from "../../utils/axios-utils"
 import { dateToMonthDay } from "../../utils/date-utils"
-import { LoginResponse, MyResponseType } from "../../utils/types"
+import { LoginResponse } from "../../utils/types"
 
 
 const fetchUser = () => {
