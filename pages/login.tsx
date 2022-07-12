@@ -3,8 +3,13 @@ import { useState } from "react"
 import { useMutation } from "react-query"
 import { useUserContext } from "../context/useUserContext"
 import { request } from "../utils/axios-utils"
+import { LoginResponse } from "../utils/types"
 
 
+type Credential = {
+  email: string;
+  password: string;
+}
 const handleLogin = (body: any) => {
   return request({ url: "/auth/login", method: "post", data: body })
 }
@@ -15,19 +20,7 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [errorText, setErrorText] = useState("")
   const onSuccess = (data: any) => {
-    const cred = {
-      username: data.data.user.username,
-      displayPic: data.data.user.displayPic,
-      access_token: data.data.access_token,
-      _id: data.data.user._id,
-      email: data.data.user.email,
-    }
-    dispatch({
-      type: "LOGIN",
-      payload: cred
-    })
-    localStorage.setItem("blognado-access-token", data.data.access_token)
-    router.push("/")
+    
   }
   const onError = (err: any) => {
     if (err.response.status == 401) {
@@ -38,7 +31,23 @@ const Login = () => {
       setErrorText("Incorrect email")
     }
   }
-  const { mutate  } = useMutation(handleLogin, {onSuccess, onError})
+  const { mutate  } = useMutation<LoginResponse, string, Credential, string>(handleLogin, {
+    onSuccess: (data) => {
+      const cred = {
+        username: data.data.user.username,
+        displayPic: data.data.user.displayPic,
+        access_token: data.data.access_token,
+        _id: data.data.user._id,
+        email: data.data.user.email,
+      }
+      dispatch({
+        type: "LOGIN",
+        payload: cred
+      })
+      localStorage.setItem("blognado-access-token", data.data.access_token)
+      router.push(`/users/${data.data.user._id}`)
+    }
+  })
   const { dispatch } = useUserContext()
   const router = useRouter()
   const handleSubmit = (e: any) => {
