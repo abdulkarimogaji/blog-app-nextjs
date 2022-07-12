@@ -7,7 +7,6 @@ export const request = ({...options}) => {
   client.defaults.headers.common.Authorization = `Bearer ${token}`
   const onSuccess = (resp: any) => resp
   const onError = (err: any) => {
-    console.log(err)
   }
   return client(options).then(onSuccess)
 }

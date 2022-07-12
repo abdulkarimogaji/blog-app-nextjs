@@ -17,7 +17,6 @@ const fetchUser = () => {
 const Profile = () => {
 
   const { userData } = useUserContext()
-  console.log(userData)
   const { data, isSuccess, isLoading } = useQuery<LoginResponse>(["me"], fetchUser)
 
 
