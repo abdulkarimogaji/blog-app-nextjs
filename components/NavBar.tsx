@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUserContext } from "../context/useUserContext";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Avatar from "./Avatar";
 
 
 const NavBar = () => {
@@ -40,16 +41,7 @@ const NavBar = () => {
         {isLoggedIn ? (
           <>
             <li>
-              <Link href="/users/me" passHref><a className="flex-center">
-                <div className="relative md:w-12 md:h-12 h-7 w-7">
-                  <Image
-                    src="/user_avatar.jpeg"
-                    alt="user_avatar"
-                    layout="fill"
-                    style={{ borderRadius: 999 }}
-                  />
-                </div>
-              </a></Link>
+              <Avatar dimension="md:w-12 md:h-12 h-7 w-7" href="/users/me"/>
             </li>
             <li>
               <button onClick={logout}>Logout</button>

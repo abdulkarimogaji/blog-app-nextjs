@@ -2,8 +2,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import Avatar from "../../components/Avatar";
 import SingleComment from "../../components/SingleComment";
 import { request } from "../../utils/axios-utils";
+import { dateToMonthDay } from "../../utils/date-utils";
 import { BlogType, Comment, MyResponseType } from "../../utils/types";
 
 
@@ -67,18 +69,9 @@ const BlogDetail = () => {
           <h1 className="md:text-5xl text-2xl text-center md:my-8 my-5 md:px-80 px-10 leading-relaxed">
             {blog.title}
           </h1>
-          <div className="flex-center mb-2">
-            <div className="relative w-20 h-20">
-              <Image
-                src="/user_avatar.jpeg"
-                alt="user_avatar"
-                layout="fill"
-                style={{ borderRadius: 999 }}
-              />
-            </div>
-          </div>
+          <Avatar dimension="w-20 h-20 mb-2" href={`/users/${blog.author._id}`}/>
           <div className="text-sm mb-4">
-            BY {blog.author.username}, UPDATED ON {blog.updatedAt}, 2022
+            BY {blog.author.username}, UPDATED ON {dateToMonthDay(blog.updatedAt)}
           </div>
           <div className="text-lg">13 Mins read</div>
         </div>
@@ -88,7 +81,7 @@ const BlogDetail = () => {
           <div className="w-3/4 md:w-4/5">
             {/* Intro */}
             <section className="md:my-16 my-8 md:px-32 px-4 ">
-              <h2>{blog.intro.title}</h2>
+              <h2></h2>
               <p className="md:text-xl text-base leading-relaxed">
                 {blog.intro.content}
               </p>
@@ -130,16 +123,7 @@ const BlogDetail = () => {
             {/* author details */}
             <div className="flex-center">
               <div className="rounded-lg bg-gray-200 md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
-                <div className="flex-center">
-                  <div className="relative md:w-20 md:h-20 h-10 w-10">
-                    <Image
-                      src="/user_avatar.jpeg"
-                      alt="user_avatar"
-                      layout="fill"
-                      style={{ borderRadius: 999 }}
-                    />
-                  </div>
-                </div>
+                <Avatar dimension="md:w-20 md:h-20 h-10 w-10" href={`/users/${blog.author._id}`}/>
                 <div>
                   <strong>{blog.author.firstName} {blog.author.lastName}</strong>
                   <p>{blog.author.username}</p>
