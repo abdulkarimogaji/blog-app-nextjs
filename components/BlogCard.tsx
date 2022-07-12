@@ -1,14 +1,16 @@
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { dateToMonthDay } from "../utils/date-utils"
 import { BlogType } from "../utils/types"
 import Avatar from "./Avatar"
 
 
 const BlogCard = ({ data }: { data: BlogType}) => {
+  const router = useRouter()
   return (
-    <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-4 gap-2">
+    <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-6 gap-2">
       <Avatar dimension="md:w-10 md:h-10 w-7 h-7" href={`/users/${data.author._id}`} />
       <div className="container">
         <p>{data.author.username}</p>
@@ -23,16 +25,18 @@ const BlogCard = ({ data }: { data: BlogType}) => {
         </div>
         <div className="flex md:justify-between flex-wrap md:mt-8 mt-2 text-xs md:text-base">
           <div className="flex btn-hover-container">
-            <div className="cursor-pointer">
+            <button className="cursor-pointer">
               <FontAwesomeIcon icon={faHeart} color="#777" />
               {" "}
               Reactions
-            </div>
-            <div className="cursor-pointer">
+            </button>
+            <button onClick={() => {
+              router.push(`blogs/${data._id}#comments`)
+            }}>
               <FontAwesomeIcon icon={faComment}  color="#777"/>
               {" "}
               Comments
-            </div>
+            </button>
           </div>
           <div className="md:block hidden">
             <span className="md:mr-8 mr-4">4 min read</span>

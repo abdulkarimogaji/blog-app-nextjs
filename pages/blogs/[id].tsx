@@ -137,7 +137,8 @@ const BlogDetail = () => {
               </div>
             </div>
             {/* Comments Section */}
-            <div className="flex flex-col items-center md:my-32 my-16" id="comments">
+            <section id="comments"></section>
+            <div className="flex flex-col items-center md:my-32 my-16">
               <h1 className="md:text-3xl text-lg mb-16">Comments({blog.comments.length})</h1>
               <div className="flex-center container">
                 <div className="rounded-lg md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">

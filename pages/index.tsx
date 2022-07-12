@@ -20,7 +20,6 @@ const Home = () => {
   if (isLoading) return <Spinner />
 
   if (isSuccess) {
-    console.log(data)
     return (
       <div className="md:w-2/3 w-4/5 flex flex-col justify-center navbar-offset my-center md:pt-16 pt-32 gap-4">
         {

@@ -207,7 +207,7 @@ left: -2rem
   }
   header {
     display: grid;
-    grid-template-columns: 1fr 1fr 2.5fr 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 2.5fr 1fr 3fr 1fr;
     align-items: center;
   }
   header li {
@@ -383,4 +383,14 @@ input[type="checkbox"].toggle:disabled + label::before {
 
 input[type="checkbox"].toggle:disabled + label::after {
   background-color: #777;
+}
+
+.btn-outline {
+ transition: 250ms;
+ border: 1px solid hsl(16, 100%, 56%);
+}
+
+.btn-outline:hover, .btn-outline:focus {
+  background-color: hsl(16, 100%, 56%);
+  color: white;
 }

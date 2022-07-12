@@ -1,9 +1,26 @@
+import { useRouter } from "next/router"
 import { useRef, useState } from "react"
+import { useMutation } from "react-query"
 import BlogSectionForm from "../../components/BlogSectionForm"
+import { useUserContext } from "../../context/useUserContext"
+import { request } from "../../utils/axios-utils"
+
+
+const createBlog = (data: any) => {
+  return request({ url: "/blogs", method: "post", data })
+} 
+
 
 const Create = () => {
+  const { userData } = useUserContext()
   const isAnonymous = useRef<HTMLInputElement>(null!)
   const [sectionCount, setSectionCount] = useState(1)
+
+  const router = useRouter()
+
+  if (userData._id == "") {
+    router.replace("/login")
+  }
   const addSection = () => {
     setSectionCount(sectionCount+1)
   }
@@ -11,27 +28,36 @@ const Create = () => {
   for (let i = 1; i < sectionCount+1; i++) {
     allSections.push("")
   }
+
+  const { mutate } = useMutation(createBlog, {
+    onSuccess: () => {
+      router.push("/users/me")
+    },
+  }) 
+
   const handleSubmit = (e:any) => {
     e.preventDefault();
     const introTitle = e.target.elements.introTitle.value 
     const introContent = e.target.elements.introContent.value
+    const tags = e.target.elements.tags.value.split(",")
     const sections = []
     for (let i = 1; i < sectionCount+1; i++) {
       const singleSection = { title: e.target.elements[`sectionTitle${i}`].value, content: e.target.elements[`sectionContent${i}`].value}
       sections.push(singleSection)
     } 
     const body = {
+      title: introTitle,
       intro: { title: introTitle , content: introContent },
       sections,
-      isAnonymous: isAnonymous.current.checked
+      isAnonymous: isAnonymous.current.checked,
+      tags
     }
-
-    console.log(body)
+    mutate(body)
   }
 
   return (
     <div className="navbar-offset md:p-16 p-8">
-      <h1 className="text-lg md:text-3xl md:mb-16 mb-8">New Blog By <strong>The coding Mermaid</strong></h1>
+      <h1 className="text-lg md:text-3xl md:mb-16 mb-8">New Blog By <strong>{userData.username}</strong></h1>
       <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
         <section className="bg-white md:p-8 p-4 border border-gray-300 rounded-lg my-8">
           <input type="checkbox" id="isAnonymous" className="toggle" ref={isAnonymous}/>
@@ -41,6 +67,10 @@ const Create = () => {
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">Blog Title*</p>
             <input type="text" placeholder="Blog Title" name="introTitle" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+          </div>
+          <div className="my-12">
+            <p className="md:text-lg text-base font-semibold mb-4">Tags (keywords for search)</p>
+            <input type="text" placeholder="Seperate tags with comma e.g politics, sports" name="tags" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
           </div>
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">Content</p>
