@@ -11,7 +11,7 @@ const NavBar = () => {
   const router = useRouter()
   const isLoggedIn = userData._id != ""
   const logout = () => {
-    localStorage.removeItem("blognado_access_token")
+    localStorage.removeItem("blognado-access-token")
     dispatch({
       type: "LOGOUT",
       payload: {} as any

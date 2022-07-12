@@ -19,9 +19,6 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [errorText, setErrorText] = useState("")
-  const onSuccess = (data: any) => {
-    
-  }
   const onError = (err: any) => {
     if (err.response.status == 401) {
       setErrorText("Incorrect Password")
@@ -46,7 +43,7 @@ const Login = () => {
       })
       localStorage.setItem("blognado-access-token", data.data.access_token)
       router.push(`/users/${data.data.user._id}`)
-    }
+    }, onError
   })
   const { dispatch } = useUserContext()
   const router = useRouter()
@@ -74,7 +71,7 @@ const Login = () => {
             <input type="password" placeholder="Enter Password" value={password} onChange={e => setPassword(e.target.value)} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 text-sm md:text-base outline-none" />
           </div>
         </section>
-        <button type="button" className="block action-btn2 p-2 px-4 rounded-md mb-4">Signup Instead</button>
+        <button type="button" className="block action-btn2 p-2 px-4 rounded-md mb-4" onClick={() => { router.push("/signup")}}>Signup Instead</button>
         <button type="submit" className="p-2 px-4 action-btn rounded-lg block">Login</button>
       </form>
     </div>
