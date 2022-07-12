@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useMutation } from "react-query"
+import Spinner from "../components/Spinner"
 import { useUserContext } from "../context/useUserContext"
 import { request } from "../utils/axios-utils"
 import { LoginResponse } from "../utils/types"
@@ -28,7 +29,7 @@ const Login = () => {
       setErrorText("Incorrect email")
     }
   }
-  const { mutate  } = useMutation<LoginResponse, string, Credential, string>(handleLogin, {
+  const { mutate, isLoading } = useMutation<LoginResponse, string, Credential, string>(handleLogin, {
     onSuccess: (data) => {
       const cred = {
         username: data.data.user.username,
@@ -55,6 +56,8 @@ const Login = () => {
     }
     mutate(body)
   }
+
+  if (isLoading) return <Spinner />
 
   return (
     <div className="navbar-offset md:p-16 p-4">
