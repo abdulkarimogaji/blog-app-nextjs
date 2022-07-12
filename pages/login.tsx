@@ -1,21 +1,61 @@
+import { useRouter } from "next/router"
 import { useState } from "react"
+import { useMutation } from "react-query"
+import { useUserContext } from "../context/useUserContext"
+import { request } from "../utils/axios-utils"
+
+
+const handleLogin = (body: any) => {
+  return request({ url: "/auth/login", method: "post", data: body })
+}
+
 
 const Login = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
-
+  const [errorText, setErrorText] = useState("")
+  const onSuccess = (data: any) => {
+    console.log(data)
+    const cred = {
+      displayName: data.data.user.displayName,
+      displayPic: data.data.user.displayPic,
+      access_token: data.data.access_token,
+      _id: data.data.user._id,
+      email: data.data.user.email,
+    }
+    console.log("cred", cred)
+    dispatch({
+      type: "LOGIN",
+      payload: cred
+    })
+    localStorage.setItem("blognado-access-token", data.data.access_token)
+    router.push("/")
+  }
+  const onError = (err: any) => {
+    if (err.response.status == 401) {
+      setErrorText("Incorrect Password")
+    } else if (err.response.status == 404) {
+      setErrorText("Credentials not found")
+    } else if (err.response.status == 400) {
+      setErrorText("Incorrect email")
+    }
+  }
+  const { mutate  } = useMutation(handleLogin, {onSuccess, onError})
+  const { dispatch } = useUserContext()
+  const router = useRouter()
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const body = {
       email,
       password,
     }
-    console.log(body)
+    mutate(body)
   }
 
   return (
     <div className="navbar-offset md:p-16 p-4">
       <h1 className="text-lg md:text-3xl md:mb-16 mb-4">Login</h1>
+      <h1 className="text-lg text-red-600">{errorText}</h1>
       <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
         <section className="bg-white p-8 border border-gray-300 rounded-lg md:my-8 my-6">
           <div className="my-12">
