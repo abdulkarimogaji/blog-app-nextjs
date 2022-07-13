@@ -4,7 +4,7 @@ import { useMutation } from "react-query"
 import Spinner from "../components/Spinner"
 import { useUserContext } from "../context/useUserContext"
 import { request } from "../utils/axios-utils"
-import { LoginResponse } from "../utils/types"
+import { LoginResponse, MyResponseType, User } from "../utils/types"
 
 
 type Credential = {
@@ -29,21 +29,22 @@ const Login = () => {
       setErrorText("Incorrect email")
     }
   }
-  const { mutate, isLoading } = useMutation<LoginResponse, string, Credential, string>(handleLogin, {
+  const { mutate, isLoading } = useMutation<MyResponseType<LoginResponse>, string, Credential, string>(handleLogin, {
     onSuccess: (data) => {
+      console.log("data, ", data)
       const cred = {
-        username: data.data.user.username,
-        displayPic: data.data.user.displayPic,
-        access_token: data.data.access_token,
-        _id: data.data.user._id,
-        email: data.data.user.email,
+        username: data.data.data.user.username,
+        picture: data.data.data.user.picture,
+        access_token: data.data.data.access_token,
+        _id: data.data.data.user._id,
+        email: data.data.data.user.email,
       }
       dispatch({
         type: "LOGIN",
         payload: cred
       })
-      localStorage.setItem("blognado-access-token", data.data.access_token)
-      router.push(`/users/${data.data.user._id}`)
+      localStorage.setItem("blognado-access-token", data.data.data.access_token)
+      router.push(`/users/me`)
     }, onError
   })
   const { dispatch } = useUserContext()

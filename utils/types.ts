@@ -3,16 +3,17 @@ type Section = {
   content: string
 }
 
-type Author = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  _id: string;
-  description: string;
-}
+// type Author = {
+//   username: string;
+//   firstName: string;
+//   lastName: string;
+//   _id: string;
+//   about: string;
+//   picture: string;
+// }
 export type Comment = {
   blog: string;
-  author: Author;
+  author: User;
   createdAt: string;
   _id: string;
   text: string;
@@ -22,7 +23,7 @@ export interface BlogType {
   _id: string;
   title: string;
   tags: string[];
-  author: Author;
+  author: User;
   sections: Section[];
   createdAt: string;
   updatedAt: string;
@@ -32,26 +33,24 @@ export interface BlogType {
 
 export interface MyResponseType<T> {
   data: {
-    data: T
+    data: T,
   }
 }
 
 
-export interface LoginResponse {
-  data: {
-    access_token: string;
-    user: User
-  }
+export type LoginResponse = {
+  user: User;
+  access_token: string;
 }
 
-interface User {
+export interface User {
   createdAt: string;
   updatedAt: string;
   firstName: string;
   lastName: string;
   username: string;
-  displayPic: string;
+  picture: string;
   _id: string;
   email: string;
-  description: string;
+  about: string;
 }

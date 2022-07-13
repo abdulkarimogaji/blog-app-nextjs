@@ -4,7 +4,7 @@ import { useMutation } from "react-query"
 import Spinner from "../components/Spinner"
 import { useUserContext } from "../context/useUserContext"
 import { request } from "../utils/axios-utils"
-import { LoginResponse } from "../utils/types"
+import { LoginResponse, MyResponseType } from "../utils/types"
 
 
 type Credential = {
@@ -14,7 +14,8 @@ type Credential = {
   lastName: string;
   email: string;
   password: string;
-  description: string;
+  about: string;
+  picture: string;
 }
 
 
@@ -31,12 +32,12 @@ const SignUp = () => {
     mutate(cred)
   }
 
-  const { mutate, isLoading } = useMutation<LoginResponse, any, any, any>(signUp, {
+  const { mutate, isLoading } = useMutation<MyResponseType<LoginResponse>, any, any, any>(signUp, {
     onSuccess: (data) => {
-      localStorage.setItem("blognado-access-token", data.data.access_token)
+      localStorage.setItem("blognado-access-token", data.data.data.access_token)
       dispatch({
         type: "LOGIN",
-        payload: { ...data.data.user, access_token: data.data.access_token}
+        payload: { ...data.data.data.user, access_token: data.data.data.access_token}
       })
       router.push(`/users/me`)
     },
@@ -81,7 +82,7 @@ const SignUp = () => {
           </div>
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">Description</p>
-            <textarea placeholder="Tell us About Yurself" value={cred.description} onChange={e => setCred(prev => ({...prev, description: e.target.value}))} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+            <textarea placeholder="Tell us About Yourself" value={cred.about} onChange={e => setCred(prev => ({...prev, about: e.target.value}))} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
           </div>
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">Password*</p>
