@@ -3,7 +3,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { dateToMonthDay } from "../utils/date-utils"
+import { dateToMonthDay, getReadTime } from "../utils/date-utils"
 import { BlogType } from "../utils/types"
 import Avatar from "./Avatar"
 
@@ -19,7 +19,7 @@ const BlogCard = ({ data }: { data: BlogType}) => {
         <Link href={`/blogs/${data._id}`} passHref>
           <a className="link-hover"><h1 className="md:text-2xl text-base font-bold my-3">{data.title}</h1></a>
         </Link>
-        <div className="flex md:gap-8 gap-4 flex-wrap md:text-sm text-xs btn-hover-container">
+        <div className="flex md:mr-4 mr-2 flex-wrap md:text-sm text-xs btn-hover-container">
           {
             data.tags.map(tag => <button key={tag}># {tag}</button>)
           }
@@ -40,7 +40,7 @@ const BlogCard = ({ data }: { data: BlogType}) => {
             </button>
           </div>
           <div className="md:block hidden">
-            <span className="md:mr-8 mr-4">4 min read</span>
+            <span className="md:mr-8 mr-4">{getReadTime(data)} min read</span>
             <button className="rounded-md bg-gray-200 py-2 px-6">Save</button>
           </div>
         </div>

@@ -7,7 +7,7 @@ import SingleComment from "../../components/SingleComment";
 import Spinner from "../../components/Spinner";
 import { useUserContext } from "../../context/useUserContext";
 import { request } from "../../utils/axios-utils";
-import { dateToMonthDay } from "../../utils/date-utils";
+import { dateToMonthDay, getReadTime } from "../../utils/date-utils";
 import { BlogType, Comment, MyResponseType } from "../../utils/types";
 
 
@@ -87,7 +87,7 @@ const BlogDetail = () => {
           <div className="text-sm mb-4">
             BY {blog.author.username}, UPDATED ON {dateToMonthDay(blog.updatedAt)}
           </div>
-          <div className="text-lg">13 Mins read</div>
+          <div className="text-lg">{getReadTime(blog)} Mins read</div>
         </div>
 
         {/* blog content */}
@@ -96,7 +96,7 @@ const BlogDetail = () => {
             {/* Intro */}
             <section className="md:my-16 my-8 md:px-32 px-4 ">
               <h2></h2>
-              <p className="md:text-xl text-base leading-relaxed">
+              <p className="md:text-xl text-base leading-loose">
                 {blog.intro.content}
               </p>
               {/* timestamps */}
