@@ -2,7 +2,6 @@ import Link from "next/link";
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUserContext } from "../context/useUserContext";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import Avatar from "./Avatar";
 

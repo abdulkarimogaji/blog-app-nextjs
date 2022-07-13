@@ -18,12 +18,18 @@ const sendComment = (body: any) => {
   return request({ url: "/comments", method: "post", data: body })
 }
 
+const viewBlog = (id: string) => {
+  return request({ url: `/blogs/${id}/view`, method: "patch"})
+}
+
 const BlogDetail = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
   const [newComment, setNewComment] = useState("")
   const { id } = router.query
-  const { data: resp, isSuccess, isLoading } = useQuery<MyResponseType<BlogType>>(["blogs", id as string], () => fetchBlog(router.query.id as string))
+  const { data: resp, isSuccess, isLoading } = useQuery<MyResponseType<BlogType>>(["blogs", id as string], () => fetchBlog(id as string))
+
+  useQuery(["blogs-view", id], () => viewBlog(id as string))
 
   const { mutate } = useMutation<MyResponseType<Comment>, any, any>(sendComment,{
     onMutate: async(newComment) => {
@@ -131,7 +137,7 @@ const BlogDetail = () => {
                   <br />
                   <br />
                   <p>
-                    {blog.author.description}
+                    {blog.author.about}
                   </p>
                 </div>
               </div>

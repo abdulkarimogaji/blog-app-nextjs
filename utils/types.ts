@@ -28,7 +28,9 @@ export interface BlogType {
   createdAt: string;
   updatedAt: string;
   intro: Section;
-  comments: Comment[]
+  comments: Comment[];
+  like_count: number;
+  view_count: number;
 }
 
 export interface MyResponseType<T> {

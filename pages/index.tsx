@@ -21,7 +21,7 @@ const Home = () => {
 
   if (isSuccess) {
     return (
-      <div className="md:w-2/3 w-4/5 flex flex-col justify-center navbar-offset my-center md:pt-16 pt-32 gap-4">
+      <div className="md:w-2/3 w-4/5 flex flex-col justify-center navbar-offset my-center md:pt-16 pt-32  pb-16 gap-4">
         {
           data?.data.data.map(blog => <BlogCard data={blog} key={blog._id} />)
         }
