@@ -1,4 +1,5 @@
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons"
+import { faPen } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -18,7 +19,7 @@ const BlogCard = ({ data }: { data: BlogType}) => {
         <Link href={`/blogs/${data._id}`} passHref>
           <a className="link-hover"><h1 className="md:text-2xl text-base font-bold my-3">{data.title}</h1></a>
         </Link>
-        <div className="flex md:gap-8 gap-4 flex-wrap btn-hover-container">
+        <div className="flex md:gap-8 gap-4 flex-wrap md:text-sm text-xs btn-hover-container">
           {
             data.tags.map(tag => <button key={tag}># {tag}</button>)
           }
@@ -28,14 +29,14 @@ const BlogCard = ({ data }: { data: BlogType}) => {
             <button className="cursor-pointer">
               <FontAwesomeIcon icon={faHeart} color="#777" />
               {" "}
-              Reactions
+              Views({data.view_count + data.like_count})
             </button>
             <button onClick={() => {
               router.push(`blogs/${data._id}#comments`)
             }}>
-              <FontAwesomeIcon icon={faComment}  color="#777"/>
+              <FontAwesomeIcon icon={faPen}  color="#777"/>
               {" "}
-              Comments
+              Comments({data.comments.length})
             </button>
           </div>
           <div className="md:block hidden">
