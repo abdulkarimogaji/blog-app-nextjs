@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useMutation } from "react-query"
 import BlogSectionForm from "../../components/BlogSectionForm"
 import { useUserContext } from "../../context/useUserContext"
@@ -18,9 +18,11 @@ const Create = () => {
 
   const router = useRouter()
 
-  if (userData._id == "") {
-    router.replace("/login")
-  }
+  useEffect(() => {
+    if (userData._id == "") {
+      router.replace("/login")
+    }
+  }, [])
   const addSection = () => {
     setSectionCount(sectionCount+1)
   }
