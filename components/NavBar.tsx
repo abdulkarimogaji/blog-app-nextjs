@@ -4,13 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUserContext } from "../context/useUserContext";
 import { useRouter } from "next/router";
 import Avatar from "./Avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const NavBar = () => {
   const { userData, dispatch } = useUserContext()
   const router = useRouter()
-  const isLoggedIn = localStorage.getItem("blognado-access-token") !== ""
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("blognado-access-token") !== "")
+  }, [])
 
   const handleClick = () => {
     router.push({
