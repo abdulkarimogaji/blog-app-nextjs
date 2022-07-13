@@ -1,4 +1,5 @@
-import { faChessBishop, faHeart } from "@fortawesome/free-regular-svg-icons"
+import { faChessBishop, faHeart, faNewspaper } from "@fortawesome/free-regular-svg-icons"
+import { faPen } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 import Link from "next/link"
@@ -54,12 +55,12 @@ const Profile = () => {
           <div className="flex md:gap-8 gap-2 container text-xs md:text-sm">
             <div className="w-1/3 bg-white border rounded-lg p-2 bg-gray-100">
               <div className="my-2 p-2">
-                <FontAwesomeIcon icon={faHeart} color="#777" />
+                <FontAwesomeIcon icon={faNewspaper} color="#777" />
                 {" "}
                 Blogs written
               </div>
               <div className="my-2 p-2">
-                <FontAwesomeIcon icon={faHeart} color="#777" />
+                <FontAwesomeIcon icon={faPen} color="#777" />
                 {" "}
                 Comments written
               </div>

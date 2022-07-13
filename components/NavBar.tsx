@@ -10,7 +10,7 @@ import { useState } from "react";
 const NavBar = () => {
   const { userData, dispatch } = useUserContext()
   const router = useRouter()
-  const isLoggedIn = userData._id != ""
+  const isLoggedIn = localStorage.getItem("blognado-access-token") !== ""
 
   const handleClick = () => {
     router.push({
