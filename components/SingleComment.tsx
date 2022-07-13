@@ -12,19 +12,19 @@ const SingleComment = ({ data }: { data: Comment}) => {
         <div>
 
         <div className="md:p-6 p-3 border border-gray-300 rounded-lg md:mb-4 mb-2">
-          <strong className="mb-3 block">{data.author.firstName} {data.author.lastName} <span className="text-gray-400 text-sm">! {dateToMonthDay(data.createdAt)}</span></strong> 
+          <strong className="mb-3 block">{data.author.username} <span className="text-gray-400 text-sm">! {dateToMonthDay(data.createdAt)}</span></strong> 
           {data.text}
         </div>
         <div className="flex btn-hover-container">
             <div className="cursor-pointer">
               <FontAwesomeIcon icon={faHeart} color="#777" />
               {" "}
-              Likes(2)
+              Likes({data.like_count || 0})
             </div>
             <div className="cursor-pointer">
               <FontAwesomeIcon icon={faComment}  color="#777"/>
               {" "}
-              Replies(3)
+              Replies
             </div>
           </div>
         </div>

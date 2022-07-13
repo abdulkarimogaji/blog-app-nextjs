@@ -4,12 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUserContext } from "../context/useUserContext";
 import { useRouter } from "next/router";
 import Avatar from "./Avatar";
+import { useState } from "react";
 
 
 const NavBar = () => {
   const { userData, dispatch } = useUserContext()
   const router = useRouter()
   const isLoggedIn = userData._id != ""
+
+  const handleClick = () => {
+    router.push({
+      pathname: `/blogs/search`,
+      query: {
+        searchKey: searchTerm
+      }
+    })
+  }
+
+  const [searchTerm, setSearchTerm] = useState("")
   const logout = () => {
     localStorage.removeItem("blognado-access-token")
     dispatch({
@@ -32,8 +44,8 @@ const NavBar = () => {
       </label>
       <nav>
         <div className="search-bar">
-          <input type="text" placeholder="Search Blogs" />
-          <button className="search-btn" onClick={() => console.log("clicked")}><FontAwesomeIcon icon={faSearch} /></button>
+          <input type="text" placeholder="Search Blogs" value={searchTerm} onChange={e => setSearchTerm(e.currentTarget.value)}/>
+          <button className="search-btn" onClick={handleClick}><FontAwesomeIcon icon={faSearch} /></button>
         </div>
       </nav>
       <ul className="nav-auth">

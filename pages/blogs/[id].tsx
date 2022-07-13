@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import Avatar from "../../components/Avatar";
 import SingleComment from "../../components/SingleComment";
 import Spinner from "../../components/Spinner";
+import { useUserContext } from "../../context/useUserContext";
 import { request } from "../../utils/axios-utils";
 import { dateToMonthDay } from "../../utils/date-utils";
 import { BlogType, Comment, MyResponseType } from "../../utils/types";
@@ -26,6 +27,7 @@ const BlogDetail = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
   const [newComment, setNewComment] = useState("")
+  const { userData } = useUserContext()
   const { id } = router.query
   const { data: resp, isSuccess, isLoading } = useQuery<MyResponseType<BlogType>>(["blogs", id as string], () => fetchBlog(id as string))
 
@@ -36,9 +38,11 @@ const BlogDetail = () => {
       await queryClient.cancelQueries(["blogs", id])
       const previousBlog = queryClient.getQueryData<MyResponseType<BlogType>>(["blogs", id])
       queryClient.setQueryData<any>(["blogs", id], (prev: any) => {
+        newComment.author = userData
+        newComment.createdAt = new Date(Date.now()).toLocaleDateString()
         return {
           ...prev,
-          data: { ...prev?.data, data: { ...prev?.data.data, comments: [...prev?.data.data.comments, newComment]}}
+          data: { ...prev?.data, data: { ...prev?.data.data, comments: [newComment, ...prev?.data.data.comments]}}
         }
       })
       setNewComment("")
@@ -51,6 +55,9 @@ const BlogDetail = () => {
   })
 
   const addComment = () => {
+    if (!userData.username) {
+      router.push("/login")
+    }
     if (newComment.length > 1) {
       mutate({
         blog: resp?.data.data._id,

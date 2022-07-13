@@ -17,6 +17,7 @@ export type Comment = {
   createdAt: string;
   _id: string;
   text: string;
+  like_count: number;
   isAnonymous: boolean;
 }
 export interface BlogType {
