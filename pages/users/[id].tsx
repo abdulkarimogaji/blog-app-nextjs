@@ -4,10 +4,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
-import { useUserContext } from "../../context/useUserContext"
 import { request } from "../../utils/axios-utils"
 import { dateToMonthDay } from "../../utils/date-utils"
-import { LoginResponse } from "../../utils/types"
+import { LoginResponse, MyResponseType, User } from "../../utils/types"
 
 
 const fetchUser = () => {
@@ -15,15 +14,13 @@ const fetchUser = () => {
 }
 
 const Profile = () => {
-
-  const { userData } = useUserContext()
-  const { data, isSuccess, isLoading } = useQuery<LoginResponse>(["me"], fetchUser)
+  const { data, isSuccess, isLoading } = useQuery<MyResponseType<User>>(["me"], fetchUser)
 
 
   if (isLoading) return <Spinner />
   
   if (isSuccess) {
-    const { user } = data.data
+    const { data: user } = data.data
     return (
       <div>
         <div className="bg-mybg p-24"></div>
@@ -43,7 +40,7 @@ const Profile = () => {
               <button className="p-2 text-xs px-4 action-btn2 rounded-lg">Edit Profile</button>
             </div>
             <h1 className="md:text-2xl text-lg font-semibold my-4">{user.firstName} {user.lastName}</h1>
-            <p className="my-4">{user.description}</p>
+            <p className="my-4">{user.about}</p>
             <p className="my-8 text-gray-400">Joined {dateToMonthDay(user.createdAt)} {" "}<FontAwesomeIcon icon={faChessBishop} color="#777" /></p>
           </div>
           <div className="flex md:gap-8 gap-2 container text-xs md:text-sm">

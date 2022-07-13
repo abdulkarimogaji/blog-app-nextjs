@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { useMutation } from "react-query"
 import BlogSectionForm from "../../components/BlogSectionForm"
+import Spinner from "../../components/Spinner"
 import { useUserContext } from "../../context/useUserContext"
 import { request } from "../../utils/axios-utils"
 
@@ -31,7 +32,7 @@ const Create = () => {
     allSections.push("")
   }
 
-  const { mutate } = useMutation(createBlog, {
+  const { mutate, isLoading } = useMutation(createBlog, {
     onSuccess: () => {
       router.push("/users/me")
     },
@@ -56,6 +57,8 @@ const Create = () => {
     }
     mutate(body)
   }
+
+  if (isLoading) return <Spinner />
 
   return (
     <div className="navbar-offset md:p-16 p-8">
