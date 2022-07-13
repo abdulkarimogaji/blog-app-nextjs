@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&family=Fontdiner+Swanky&family=New+Rocker&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&family=Fontdiner+Swanky&family=New+Rocker&family=Saira+Semi+Condensed:wght@300&display=swap');
 
 
 @tailwind base;
@@ -14,7 +14,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Saira Semi Condensed', sans-serif;
   background-color: #eee;
   scroll-behavior: smooth;
 }
