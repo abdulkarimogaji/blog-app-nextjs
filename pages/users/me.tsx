@@ -2,30 +2,19 @@ import { faChessBishop, faHeart } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/router"
-import { useEffect } from "react"
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
-import { useUserContext } from "../../context/useUserContext"
 import { request } from "../../utils/axios-utils"
 import { dateToMonthDay } from "../../utils/date-utils"
-import { MyResponseType, User } from "../../utils/types"
+import { LoginResponse, MyResponseType, User } from "../../utils/types"
 
 
-const fetchUser = (id: string) => {
-  return request({ url: `/users/${id}`})
+const fetchUser = () => {
+  return request({ url: "/users/me"})
 }
 
 const Profile = () => {
-  const { userData } = useUserContext()
-  const router = useRouter()
-  const { id } = router.query
-  useEffect(() => {
-    if (userData._id == id) {
-      router.replace("/users/me")
-    }
-  }, [])
-  const { data, isSuccess, isLoading } = useQuery<MyResponseType<User>>(["user", id as string], () => fetchUser(id as string))
+  const { data, isSuccess, isLoading } = useQuery<MyResponseType<User>>(["me"], fetchUser)
 
 
   if (isLoading) return <Spinner />
@@ -46,6 +35,9 @@ const Profile = () => {
                   style={{ borderRadius: 999 }}
                 />
               </div>
+            </div>
+            <div className="text-end">
+              <button className="p-2 text-xs px-4 action-btn2 rounded-lg">Edit Profile</button>
             </div>
             <h1 className="md:text-2xl text-lg font-semibold my-4">{user.firstName} {user.lastName}</h1>
             <p className="my-4">{user.about}</p>
