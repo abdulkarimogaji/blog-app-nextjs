@@ -7,12 +7,12 @@ const BlogSectionForm = ({ secNum }: {secNum: number}) => {
         </div>
         <div className="my-12">
             <p className="md:text-lg text-base font-semibold md:mb-8 mb-4">Section Content</p>
-            <textarea placeholder="Content" name={`sectionContent${secNum}`} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+            <textarea rows={7} placeholder="Content" name={`sectionContent${secNum}`} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
         </div>
 
         <div className="my-12">
             <p className="md:text-lg text-base font-semibold md:mb-8 mb-4">Section Image</p>
-            <input type="file" name="file" />
+            <input type="file" name={`file${secNum}`} />
         </div>
     </section>)
 }

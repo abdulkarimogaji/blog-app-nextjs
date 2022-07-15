@@ -1,16 +1,9 @@
 type Section = {
   title: string;
-  content: string
+  content: string;
+  image: string;
 }
 
-// type Author = {
-//   username: string;
-//   firstName: string;
-//   lastName: string;
-//   _id: string;
-//   about: string;
-//   picture: string;
-// }
 export type Comment = {
   blog: string;
   author: User;
@@ -56,4 +49,6 @@ export interface User {
   _id: string;
   email: string;
   about: string;
+  blogCount: number;
+  comments: Comment[];
 }

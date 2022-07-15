@@ -74,16 +74,19 @@ const BlogDetail = () => {
     return (
       <section className="navbar-offset bg-white">
         <div className="flex-center">
-          <div className="relative md:w-3/4 w-4/5 h-64 md:h-96">
-            <Image src="/cover_img.jpg" alt="cover_img" layout="fill" objectFit="cover" />
-          </div>
+          {
+            blog.intro.image ? (<div className="relative md:w-3/4 w-4/5 h-64 md:h-96">
+            <Image src={blog.intro.image} alt="cover_img" layout="fill" objectFit="cover" />
+          </div>): (<><br /><br /><br /></>)
+          }
+      
         </div>
         {/* blog title */}
         <div className="text-center">
           <h1 className="md:text-5xl text-2xl text-center md:my-8 my-5 md:px-80 px-10 leading-relaxed">
             {blog.title}
           </h1>
-          <Avatar dimension="w-20 h-20 mb-2" href={`/users/${blog.author._id}`}/>
+          <Avatar dimension="w-20 h-20 mb-2" href={`/users/${blog.author._id}`} src={blog.author.picture} />
           <div className="text-sm mb-4">
             BY {blog.author.username}, UPDATED ON {dateToMonthDay(blog.updatedAt)}
           </div>
@@ -121,14 +124,16 @@ const BlogDetail = () => {
                   <p className="md:text-xl text-base leading-relaxed">
                     {sec.content}
                   </p>
-                  <div className="flex-center md:my-16 my-8">
-                    <div className="relative md:w-3/4 w-4/5 md:h-96 h-40">
-                      <Image
-                        src="/example_blog_img.jpg"
-                        alt="example"
-                        layout="fill"
-                      />
-                    </div>
+                  <div className="flex-center md:my-16 my-8"> {
+                    sec.image ? (<div className="relative md:w-3/4 w-4/5 md:h-96 h-40">
+                    <Image
+                      src={sec.image}
+                      alt="example"
+                      layout="fill"
+                    />
+                  </div>): <br />
+                  }
+                    
                   </div>
                 </section>
               ))
@@ -137,7 +142,7 @@ const BlogDetail = () => {
             {/* author details */}
             <div className="flex-center">
               <div className="rounded-lg bg-gray-200 md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
-                <Avatar dimension="md:w-20 md:h-20 h-10 w-10" href={`/users/${blog.author._id}`}/>
+                <Avatar dimension="md:w-20 md:h-20 h-10 w-10" href={`/users/${blog.author._id}`} src={blog.author.picture} />
                 <div>
                   <strong>{blog.author.firstName} {blog.author.lastName}</strong>
                   <p>{blog.author.username}</p>
@@ -158,7 +163,7 @@ const BlogDetail = () => {
                   <div className="flex-center">
                     <div className="relative md:w-15 md:h-15 h-7 w-7">
                       <Image
-                        src="/user_avatar.jpeg"
+                        src={userData.picture || "/user_avatar.jpeg"}
                         alt="user_avatar"
                         layout="fill"
                         style={{ borderRadius: 999 }}
@@ -166,8 +171,8 @@ const BlogDetail = () => {
                     </div>
                   </div>
                   <div className="container">
-                    <textarea placeholder="Write Comment" value={newComment} onChange={e => setNewComment(e.target.value)} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
-                    <button type="submit" onClick={addComment} className="p-2 px-4 text-xs action-btn rounded-lg block">Submit</button>
+                    <textarea rows={7} placeholder="Write Comment" value={newComment} onChange={e => setNewComment(e.target.value)} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+                    <button type="submit" onClick={addComment} className="md:p-2 p-1 md:px-4 px-2 text-xs md:text-sm action-btn rounded-lg block my-2">Submit</button>
 
                   </div>
 
