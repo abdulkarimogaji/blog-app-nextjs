@@ -5,16 +5,17 @@ import Link from "next/link";
 type Props = {
   dimension: string;
   href: string;
+  src: string
 }
 
-const Avatar = ({ dimension, href }: Props) => {
+const Avatar = ({ dimension, href, src }: Props) => {
   return (
     <Link href={href} passHref>
       <a className="flex-center">
         <div className={`relative ${dimension}`}>
           <Image
-            src="/user_avatar.jpeg"
-            alt="user_avatar"
+            src={src || "/user_avatar.jpeg"}
+            alt="avatar"
             layout="fill"
             style={{ borderRadius: 999 }}
           />

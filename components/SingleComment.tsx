@@ -1,14 +1,22 @@
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useMutation } from "react-query"
+import { request } from "../utils/axios-utils"
 import { dateToMonthDay } from "../utils/date-utils"
 import { Comment } from "../utils/types"
 import Avatar from "./Avatar"
 
+
+const likeComment = (id: string) => {
+  return request({ url: `/comments/${id}`, method: "patch"})
+}
 const SingleComment = ({ data }: { data: Comment}) => {
+
+  const { mutate } = useMutation(likeComment) 
   return (
     <div className="flex-center container">
       <div className="rounded-lg md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">
-        <Avatar dimension="md:w-15 md:h-15 h-7 w-7" href={`/users/${data.author._id}`}/>
+        <Avatar dimension="md:w-15 md:h-15 h-7 w-7" href={`/users/${data.author._id}`} src={data.author.picture} />
         <div>
 
         <div className="md:p-6 p-3 border border-gray-300 rounded-lg md:mb-4 mb-2">
@@ -16,12 +24,12 @@ const SingleComment = ({ data }: { data: Comment}) => {
           {data.text}
         </div>
         <div className="flex btn-hover-container">
-            <div className="cursor-pointer">
+            <button className="cursor-pointer" onClick={() => mutate(data._id)}>
               <FontAwesomeIcon icon={faHeart} color="#777" />
               {" "}
               Likes({data.like_count || 0})
-            </div>
-            <div className="cursor-pointer">
+            </button>
+            <div className="">
               <FontAwesomeIcon icon={faComment}  color="#777"/>
               {" "}
               Replies

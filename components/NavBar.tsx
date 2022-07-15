@@ -56,7 +56,7 @@ const NavBar = () => {
         {isLoggedIn ? (
           <>
             <li>
-              <Avatar dimension="md:w-12 md:h-12 h-7 w-7" href="/users/me" />
+              <Avatar dimension="md:w-12 md:h-12 h-7 w-7" href="/users/me" src={userData.picture} />
             </li>
             <li>
               <button className="p-2 text-sm px-4 btn-outline border rounded-lg" onClick={logout}>Logout</button>

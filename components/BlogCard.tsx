@@ -12,7 +12,7 @@ const BlogCard = ({ data }: { data: BlogType}) => {
   const router = useRouter()
   return (
     <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-6 gap-2">
-      <Avatar dimension="md:w-10 md:h-10 w-7 h-7" href={`/users/${data.author._id}`} />
+      <Avatar dimension="md:w-10 md:h-10 w-7 h-7" href={`/users/${data.author._id}`} src={data.author.picture} />
       <div className="container">
         <p>{data.author.username}</p>
         <small>{dateToMonthDay(data.createdAt)}</small>
@@ -32,7 +32,7 @@ const BlogCard = ({ data }: { data: BlogType}) => {
               Views({data.view_count + data.like_count})
             </button>
             <button onClick={() => {
-              router.push(`blogs/${data._id}#comments`)
+              router.push(`/blogs/${data._id}#comments`)
             }}>
               <FontAwesomeIcon icon={faPen}  color="#777"/>
               {" "}

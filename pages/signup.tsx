@@ -25,14 +25,33 @@ const signUp = (data: Credential) => {
 const SignUp = () => {
   const [errorText, setErrorText] = useState("")
   const [cred, setCred] = useState<Credential>({} as Credential)
+  const [picture, setPicture] = useState<any>(null)
   const router = useRouter()
   const { dispatch } = useUserContext()
-  const handleSubmit = (e: any) => {
+  
+  const handleSubmit = async(e: any) => {
     e.preventDefault();
-    mutate(cred)
+    const url = await handleImageUpload()
+    mutate({...cred, picture: url})
+  }
+
+  const handleImageUpload = async() => {
+    let formData = new FormData()
+    formData.append("upload", picture)
+    if (!picture) return  ""
+    const res = await fetch("/api/file-upload", {
+      method: "POST",
+      body: formData,
+    })
+    if (res.status != 200) return ""
+    const resJson = await res.json()
+    return `https://drive.google.com/uc?export=view&id=${resJson.data.id}`
   }
 
   const { mutate, isLoading } = useMutation<MyResponseType<LoginResponse>, any, any, any>(signUp, {
+    onMutate(variables) {
+      console.log("mutatign", variables)
+    },
     onSuccess: (data) => {
       localStorage.setItem("blognado-access-token", data.data.data.access_token)
       dispatch({
@@ -52,6 +71,10 @@ const SignUp = () => {
     }
   })
 
+  const handleSetPicture = (e: any) => {
+    setPicture(e.target.files[0])
+  }
+
   if (isLoading) return <Spinner />
 
   return (
@@ -69,6 +92,10 @@ const SignUp = () => {
             <input type="text" value={cred.lastName} onChange={e => setCred(prev => ({...prev, lastName: e.target.value}))} placeholder="Name" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
           </div>
           <div className="my-12">
+            <p className="md:text-lg text-base font-semibold mb-4">Profile Picture</p>
+            <input type="file" name="upload" onChange={handleSetPicture} placeholder="Profile Picture" className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+          </div>
+          <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">Username (This is what appears in comments)</p>
             <input type="text" placeholder="Display Name" value={cred.username} onChange={e => setCred(prev => ({...prev, username: e.target.value}))} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
           </div>
@@ -82,7 +109,7 @@ const SignUp = () => {
           </div>
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">Description</p>
-            <textarea placeholder="Tell us About Yourself" value={cred.about} onChange={e => setCred(prev => ({...prev, about: e.target.value}))} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
+            <textarea rows={7} placeholder="Tell us About Yourself" value={cred.about} onChange={e => setCred(prev => ({...prev, about: e.target.value}))} className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 md:text-base text-sm outline-none" />
           </div>
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">Password*</p>
