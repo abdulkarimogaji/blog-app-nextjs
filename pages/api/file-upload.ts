@@ -4,12 +4,7 @@ import fs from "fs";
 
 
 const multer = Multer({
-  storage: Multer.diskStorage({
-    destination: "image-files",
-    filename: function (req, file, callback) {
-      callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-    },
-  }),
+  storage: Multer.memoryStorage(),
   limits: {
     fileSize: 5 * 1024 * 1024,
   },
