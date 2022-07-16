@@ -1,6 +1,7 @@
 import Multer from "multer";
 import { google } from "googleapis";
 import fs from "fs";
+import { Readable } from "stream";
 
 
 const multer = Multer({
@@ -29,9 +30,11 @@ const uploadToGoogleDrive = async (file: any, auth: any) => {
     parents: [process.env.GOOGLE_DRIVE_FOLDER_ID!]
   };
 
+  var stream = Readable.from(file.buffer.toString())
+
   const media = {
     mimeType: file.mimetype,
-    body: fs.createReadStream(file.path),
+    body: stream,
   };
 
   const driveService = google.drive({ version: "v3", auth });
@@ -81,7 +84,7 @@ export const config = {
       }
       const auth = authenticateGoogle();
       const response = await uploadToGoogleDrive(req.file, auth);
-      deleteFile(req.file.path);
+      // deleteFile(req.file.path);
       res.status(200).json(response);
     } catch (err) {
       console.log(err)
