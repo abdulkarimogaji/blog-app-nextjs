@@ -24,7 +24,7 @@ body {
 }
 
 :root {
-  --primary-clr: #223c50;
+  --primary-clr: rgb(34, 60, 80);
   --link-hover-clr: hsl(16, 100%, 66%);
 }
 

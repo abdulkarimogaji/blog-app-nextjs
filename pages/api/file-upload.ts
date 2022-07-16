@@ -30,7 +30,7 @@ const uploadToGoogleDrive = async (file: any, auth: any) => {
     parents: [process.env.GOOGLE_DRIVE_FOLDER_ID!]
   };
 
-  var stream = Readable.from(file.buffer.toString())
+  var stream = Readable.from(file.buffer)
 
   const media = {
     mimeType: file.mimetype,
