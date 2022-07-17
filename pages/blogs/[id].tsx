@@ -105,7 +105,7 @@ const BlogDetail = () => {
               {/* timestamps */}
               <ol className="flex flex-col md:gap-6 gap-3 md:text-xl text-base md:my-8 my-4 md:pl-6 pl-3 timestamp-ol">
                 {
-                  blog.sections.map(sec => (
+                  blog.sections.filter(sec => sec.title).map(sec => (
                     <li key={sec.title}>
                       <a href={`#${sec.title}`} >{sec.title}</a>
                     </li>
@@ -120,7 +120,7 @@ const BlogDetail = () => {
             {
               blog.sections.map((sec, i) => (
                 <section className="md:my-16 my-8 md:px-32 px-4" id={sec.title} key={sec.title}>
-                  <h2 className="md:text-5xl text-lg md:mb-8 mb-4">{i+1}. {sec.title}</h2>
+                  {sec.title && <h2 className="md:text-5xl text-lg md:mb-8 mb-4">{sec.title}</h2>}
                   <p className="md:text-xl text-base leading-relaxed">
                     {sec.content}
                   </p>

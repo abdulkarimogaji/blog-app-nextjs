@@ -25,12 +25,12 @@ const BlogCard = ({ data, setFilterTag }: { data: BlogType, setFilterTag: any}) 
           }
         </div>
         <div className="flex md:justify-between flex-wrap md:mt-8 mt-2 text-xs md:text-base">
-          <div className="flex btn-hover-container">
-            <button className="cursor-pointer">
+          <div className="flex btn-hover-container items-center">
+            <div>
               <FontAwesomeIcon icon={faHeart} color="#777" />
               {" "}
               Views({data.view_count + data.like_count})
-            </button>
+            </div>
             <button onClick={() => {
               router.push(`/blogs/${data._id}#comments`)
             }}>
