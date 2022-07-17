@@ -1,6 +1,6 @@
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useMutation } from "react-query"
+import { useMutation, useQueryClient } from "react-query"
 import { request } from "../utils/axios-utils"
 import { dateToMonthDay } from "../utils/date-utils"
 import { Comment } from "../utils/types"
@@ -12,7 +12,12 @@ const likeComment = (id: string) => {
 }
 const SingleComment = ({ data }: { data: Comment}) => {
 
-  const { mutate } = useMutation(likeComment) 
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(likeComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["blogs", data.blog])
+    }
+  }) 
   return (
     <div className="flex-center container">
       <div className="rounded-lg md:w-2/3 container md:p-8 p-3 md:text-sm text-xs flex md:gap-6 gap-3">

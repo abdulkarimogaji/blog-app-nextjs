@@ -14,7 +14,7 @@ const NavBar = () => {
 
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem("blognado-access-token") !== "")
-  }, [])
+  })
 
   const handleClick = () => {
     router.push({
@@ -27,7 +27,8 @@ const NavBar = () => {
 
   const [searchTerm, setSearchTerm] = useState("")
   const logout = () => {
-    localStorage.removeItem("blognado-access-token")
+    localStorage.setItem("blognado-access-token", "")
+    setIsLoggedIn(false)
     dispatch({
       type: "LOGOUT",
       payload: {} as any

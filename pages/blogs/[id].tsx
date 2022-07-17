@@ -163,7 +163,7 @@ const BlogDetail = () => {
                   <div className="flex-center">
                     <div className="relative md:w-15 md:h-15 h-7 w-7">
                       <Image
-                        src={userData.picture || "/user_avatar.jpeg"}
+                        src={userData.picture || "/user_avatar.jfif"}
                         alt="user_avatar"
                         layout="fill"
                         style={{ borderRadius: 999 }}
