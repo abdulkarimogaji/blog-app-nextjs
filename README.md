@@ -82,9 +82,11 @@ Simply visit: <a href="https://blognado.vercel.app">https://blognado.vercel.app/
 - [X] Use React Query for Data Fetching
 - [X] Add Loading Spinner
 - [X] Use optimistic updates when creating new comment
+- [ ] Use slugs instead of ids in the url
 - [ ] Add Edit Profile Page 
 - [ ] Add Edit Blog Page 
 - [ ] Blog Preview 
+- [ ] Write tests
 
 
 See the [open issues](https://github.com/AbdulkarimOgaji/blog-app/nextjs) for a full list of proposed features (and known issues).

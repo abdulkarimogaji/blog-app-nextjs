@@ -14,7 +14,7 @@ const Avatar = ({ dimension, href, src }: Props) => {
       <a className="flex-center">
         <div className={`relative ${dimension}`}>
           <Image
-            src={src || "/user_avatar.jpeg"}
+            src={src || "/user_avatar.jfif"}
             alt="avatar"
             layout="fill"
             style={{ borderRadius: 999 }}

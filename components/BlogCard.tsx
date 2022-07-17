@@ -8,7 +8,7 @@ import { BlogType } from "../utils/types"
 import Avatar from "./Avatar"
 
 
-const BlogCard = ({ data }: { data: BlogType}) => {
+const BlogCard = ({ data, setFilterTag }: { data: BlogType, setFilterTag: any}) => {
   const router = useRouter()
   return (
     <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-6 gap-2">
@@ -21,7 +21,7 @@ const BlogCard = ({ data }: { data: BlogType}) => {
         </Link>
         <div className="flex md:mr-4 mr-2 flex-wrap md:text-sm text-xs btn-hover-container">
           {
-            data.tags.map(tag => <button key={tag}># {tag}</button>)
+            data.tags.map(tag => <button key={tag} onClick={() => setFilterTag(tag)}># {tag}</button>)
           }
         </div>
         <div className="flex md:justify-between flex-wrap md:mt-8 mt-2 text-xs md:text-base">
