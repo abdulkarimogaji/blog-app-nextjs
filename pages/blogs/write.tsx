@@ -13,14 +13,13 @@ const createBlog = (data: any) => {
 
 
 const Create = () => {
-  const { userData } = useUserContext()
   const isAnonymous = useRef<HTMLInputElement>(null!)
   const [sectionCount, setSectionCount] = useState(1)
 
   const router = useRouter()
 
   useEffect(() => {
-    if (userData._id == "") {
+    if (localStorage.getItem("blognado-access-token") == "") {
       router.replace("/login")
     }
   }, [])
@@ -46,7 +45,7 @@ const Create = () => {
       method: "POST",
       body: formData,
     })
-    if (res.status != 200) return ""
+    if (res.status > 399 ) return ""
     const resJson = await res.json()
     return `https://drive.google.com/uc?export=view&id=${resJson.data.id}`
   }
@@ -59,7 +58,7 @@ const Create = () => {
     var p = e.target.fileIntro.files[0]
     var introImage = undefined
     if (p) {
-      introImage = await handleImageUpload(picture)
+      introImage = await handleImageUpload(p)
       if(!introImage) {
         introImage = undefined
       }
@@ -93,7 +92,7 @@ const Create = () => {
 
   return (
     <div className="navbar-offset md:p-16 p-4">
-      <h1 className="text-lg md:text-3xl md:mb-16 mb-8">New Blog By <strong>{userData.username}</strong></h1>
+      <h1 className="text-lg md:text-3xl md:mb-16 mb-8">New Blog</h1>
       <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
         <section className="bg-white md:p-8 p-4 border border-gray-300 rounded-lg my-8">
           <input type="checkbox" id="isAnonymous" className="toggle" ref={isAnonymous}/>
@@ -114,7 +113,7 @@ const Create = () => {
           </div>
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold md:mb-8 mb-4">Cover Image</p>
-            <input type="file" name={`fileIntro`} />
+            <input type="file" name="fileIntro" />
         </div>
         </section>
         {
