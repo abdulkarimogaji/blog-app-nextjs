@@ -14,7 +14,11 @@ const Home = () => {
   const [page, setPage] = useState(1)
   const { searchKey } = useRouter().query
   const { isError, isSuccess, isLoading, data, error } = useQuery<MyResponseType<BlogType[]>, any>(["blogs", searchKey, page], () => fetchBlogs(page, searchKey as string), { keepPreviousData: true })
-
+  const [filterTag, setFilterTag] = useState("")
+  const isTag = (blog: BlogType) => {
+    if (!filterTag) return true
+    return blog.tags.includes(filterTag)
+  }
   if (isError) {
     return <div>{error.message}</div>
   }
@@ -26,7 +30,7 @@ const Home = () => {
       <div className="md:w-2/3 w-4/5 flex flex-col justify-center navbar-offset my-center md:pt-16 pt-32  pb-16 gap-4">         
         <div className='text-xl  font-semibold text-center'>{data.data.data.length !== 0 ? `Search Results for "${searchKey}"`: `No Result for "${searchKey}"`}</div>        
         {
-          data?.data.data.map(blog => <BlogCard data={blog} key={blog._id} />)
+          data?.data.data.filter(isTag).map(blog => <BlogCard data={blog} key={blog._id} setFilterTag={setFilterTag} />)
         }
       </div>
     )
