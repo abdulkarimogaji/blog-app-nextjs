@@ -61,7 +61,7 @@ const Login = () => {
   if (isLoading) return <Spinner />
 
   return (
-    <div className="navbar-offset md:p-16 p-4">
+    <div className=" md:p-16 p-4">
       <h1 className="text-lg md:text-3xl md:mb-16 mb-4">Login</h1>
       <h1 className="text-lg text-red-600">{errorText}</h1>
       <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>

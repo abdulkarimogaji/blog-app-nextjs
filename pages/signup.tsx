@@ -78,7 +78,7 @@ const SignUp = () => {
   if (isLoading) return <Spinner />
 
   return (
-    <div className="navbar-offset md:p-16 p-8">
+    <div className=" md:p-16 p-8">
       <h1 className="md:text-3xl text-lg md:mb-16 mb-8">Sign up to <strong>Blognado</strong></h1>
       <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
         <h1>{errorText}</h1>
