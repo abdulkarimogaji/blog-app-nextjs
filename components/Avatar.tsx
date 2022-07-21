@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-
 type Props = {
   dimension: string;
   href: string;
-  src: string
-}
+  src: string;
+};
 
 const Avatar = ({ dimension, href, src }: Props) => {
   return (
@@ -14,7 +13,7 @@ const Avatar = ({ dimension, href, src }: Props) => {
       <a className="flex-center">
         <div className={`relative ${dimension}`}>
           <Image
-            src={src || "/user_avatar.jfif"}
+            src={src || "/default_avatar.jfif"}
             alt="avatar"
             layout="fill"
             style={{ borderRadius: 999 }}
@@ -22,7 +21,7 @@ const Avatar = ({ dimension, href, src }: Props) => {
         </div>
       </a>
     </Link>
-  )
-}
+  );
+};
 
 export default Avatar;

@@ -1,8 +1,7 @@
 import Multer from "multer";
 import { google } from "googleapis";
-import fs from "fs";
 import { Readable } from "stream";
-
+import Cors from "cors";
 
 const multer = Multer({
   storage: Multer.memoryStorage(),
@@ -11,9 +10,13 @@ const multer = Multer({
   },
 });
 
+// Initializing the cors middleware
+const cors = Cors({
+  methods: ["GET", "HEAD"],
+});
 
 const authenticateGoogle = () => {
-  let privateKey =  process.env.GOOGLE_AUTH_PRIVATE_KEY!.replace(/\\n/gm, '\n')
+  let privateKey = process.env.GOOGLE_AUTH_PRIVATE_KEY!.replace(/\\n/gm, "\n");
   const auth = new google.auth.JWT({
     email: process.env.GOOGLE_AUTH_CLIENT_EMAIL,
     key: privateKey,
@@ -23,14 +26,13 @@ const authenticateGoogle = () => {
   return auth;
 };
 
-
 const uploadToGoogleDrive = async (file: any, auth: any) => {
   const fileMetadata = {
     name: file.originalname,
-    parents: [process.env.GOOGLE_DRIVE_FOLDER_ID!]
+    parents: [process.env.GOOGLE_DRIVE_FOLDER_ID!],
   };
 
-  var stream = Readable.from(file.buffer)
+  var stream = Readable.from(file.buffer);
 
   const media = {
     mimeType: file.mimetype,
@@ -47,24 +49,16 @@ const uploadToGoogleDrive = async (file: any, auth: any) => {
   return response;
 };
 
-
-const deleteFile = (filePath: any) => {
-  fs.unlink(filePath, () => {
-    console.log("file deleted");
-  });
-};
-
-
 function runMiddleware(req: any, res: any, fn: any) {
   return new Promise((resolve, reject) => {
     fn(req, res, (result: any) => {
       if (result instanceof Error) {
-        return reject(result)
+        return reject(result);
       }
 
-      return resolve(result)
-    })
-  })
+      return resolve(result);
+    });
+  });
 }
 
 export const config = {
@@ -72,24 +66,22 @@ export const config = {
     externalResolver: true,
     bodyParser: false,
   },
-}
+};
 
- export default async function handler(req: any, res: any, next: any) {
-   if (req.method == "POST") {
-    await runMiddleware(req, res, multer.single("upload"))
+export default async function handler(req: any, res: any, next: any) {
+  if (req.method == "POST") {
+    await runMiddleware(req, res, cors);
+    await runMiddleware(req, res, multer.single("upload"));
     try {
       if (!req.file) {
-        res.status(400).json({message: "No file uploaded"});
+        res.status(400).json({ message: "No file uploaded" });
         return;
       }
       const auth = authenticateGoogle();
       const response = await uploadToGoogleDrive(req.file, auth);
-      // deleteFile(req.file.path);
       res.status(200).json(response);
     } catch (err) {
-      console.log(err)
-      res.status(500).json({ error: err })
+      res.status(500).json({ error: err });
+    }
   }
-  }
-  
-};
+}
