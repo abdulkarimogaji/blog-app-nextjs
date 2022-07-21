@@ -41,8 +41,8 @@ const Profile = () => {
             <div className="absolute md:-top-16 -top-8 border-8 rounded-full bg-myborder profile-image">
               <div className="relative md:w-32 md:h-32 h-16 w-16">
                 <Image
-                  src={ user.picture || "/user_avatar.jfif"}
-                  alt="user_avatar"
+                  src={ user.picture || "/default_avatar.jfif"}
+                  alt="default_avatar"
                   layout="fill"
                   style={{ borderRadius: 999 }}
                 />

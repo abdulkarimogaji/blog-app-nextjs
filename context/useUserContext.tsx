@@ -1,37 +1,35 @@
 import { createContext, ReactNode, useContext, useReducer } from "react";
 
-
-
 const initialUserData = {
   picture: "",
   username: "",
   access_token: "",
   _id: "",
-  email: ""
-}
+  email: "",
+};
 
-type UserType = typeof initialUserData
-
+type UserType = typeof initialUserData;
 
 // payload and type here normally will be a union type to accomodate different actions
-interface ActionType  {
-  payload: UserType
-  type: string
+interface ActionType {
+  payload: UserType;
+  type: string;
 }
-
 
 const reducer = (state: UserType, action: ActionType): UserType => {
   switch (action.type) {
-    case "LOGIN": return action.payload
-    case "LOGOUT": return initialUserData
-    default: return state
+    case "LOGIN":
+      return action.payload;
+    case "LOGOUT":
+      return initialUserData;
+    default:
+      return state;
   }
-}
-
+};
 
 interface userContextInterface {
   userData: UserType;
-  dispatch: React.Dispatch<ActionType> 
+  dispatch: React.Dispatch<ActionType>;
 }
 
 //  create context here
