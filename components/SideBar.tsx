@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { SetStateAction } from "react";
 
-const SideBar = () => {
+type Props = {
+  tags: string[];
+  setFilterTag: React.Dispatch<SetStateAction<string>>;
+};
+const SideBar = ({ tags, setFilterTag }: Props) => {
   // 128736 settings
   // 128274 padlock
   // 128214 open book
@@ -38,11 +43,16 @@ const SideBar = () => {
           </button>
         </li>
         <ul className="ml-4">
-          <li>
-            <Link href="/" passHref>
-              <a className="sidenav-hover block p-3 rounded-lg"># gaming</a>
-            </Link>
-          </li>
+          {tags.map((tag) => (
+            <li key={tag}>
+              <button
+                onClick={() => setFilterTag(tag)}
+                className="sidenav-hover block p-3 rounded-lg"
+              >
+                #{tag}
+              </button>
+            </li>
+          ))}
         </ul>
         <li>
           <Link href="/" passHref>

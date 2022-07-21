@@ -15,13 +15,14 @@ const likeBlogMutation = (id: string) => {
 };
 
 const BlogActions = ({ blog }: { blog: BlogType }) => {
+  const queryClient = useQueryClient();
   // view blog on page load
   useQuery(["blogs-view", blog._id], () => viewBlog(blog._id));
 
   // like blog
   const { mutate: likeBlog } = useMutation(likeBlogMutation, {
     onSuccess: () => {
-      useQueryClient().invalidateQueries(["blogs", blog._id]);
+      queryClient.invalidateQueries(["blogs", blog._id]);
     },
   });
 
