@@ -1,8 +1,13 @@
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faBook, faHouse, faPen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import Avatar from "../../components/Avatar";
+import BlogSectionForm from "../../components/BlogSectionForm";
 import SingleComment from "../../components/SingleComment";
 import Spinner from "../../components/Spinner";
 import { useUserContext } from "../../context/useUserContext";
@@ -20,7 +25,11 @@ const sendComment = (body: any) => {
 }
 
 const viewBlog = (id: string) => {
-  return request({ url: `/blogs/${id}/view`, method: "patch"})
+  return request({ url: `/blogs/${id}/view`, method: "patch" })
+}
+
+const likeBlogMutation = (id: string) => {
+  return request({ url: `/blogs/${id}/like`, method: "patch" })
 }
 
 const BlogDetail = () => {
@@ -33,8 +42,14 @@ const BlogDetail = () => {
 
   useQuery(["blogs-view", id], () => viewBlog(id as string))
 
-  const { mutate } = useMutation<MyResponseType<Comment>, any, any>(sendComment,{
-    onMutate: async(newComment) => {
+  const { mutate: likeBlog } = useMutation(likeBlogMutation, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["blogs", id])
+    }
+  })
+
+  const { mutate } = useMutation<MyResponseType<Comment>, any, any>(sendComment, {
+    onMutate: async (newComment) => {
       await queryClient.cancelQueries(["blogs", id])
       const previousBlog = queryClient.getQueryData<MyResponseType<BlogType>>(["blogs", id])
       queryClient.setQueryData<any>(["blogs", id], (prev: any) => {
@@ -42,7 +57,7 @@ const BlogDetail = () => {
         newComment.createdAt = new Date(Date.now()).toLocaleDateString()
         return {
           ...prev,
-          data: { ...prev?.data, data: { ...prev?.data.data, comments: [newComment, ...prev?.data.data.comments]}}
+          data: { ...prev?.data, data: { ...prev?.data.data, comments: [newComment, ...prev?.data.data.comments] } }
         }
       })
       setNewComment("")
@@ -51,7 +66,7 @@ const BlogDetail = () => {
     onError: (_error, _v, context: any) => {
       queryClient.setQueryData(["blogs", id], context.previousBlog)
     },
-    onSettled: () => {},
+    onSettled: () => { },
   })
 
   const addComment = () => {
@@ -73,13 +88,31 @@ const BlogDetail = () => {
     const { data: blog } = resp?.data!
     return (
       <section className=" bg-white">
+        <aside className="fixed left-0 md:top-0 bottom-0 md:w-24 container rounded-lg flex items-center justify-center">
+          <ul className="flex md:flex-col md:gap-8 gap-4 bg-mybg2 border-2 border md:py-16 container items-center justify-center">
+          <li>
+              <Link href="/" passHref>
+                <a className='p-3 rounded-full border hover:bg-gray-300'><FontAwesomeIcon icon={faHouse} /></a>
+              </Link>
+            </li>
+            <li>
+              <button className='p-3 rounded-full border hover:bg-gray-300' onClick={() => likeBlog(blog._id)}><span>&#128077;</span>{" "}{blog.like_count}</button>
+            </li>
+            <li>
+              <button className='p-3 rounded-full border hover:bg-gray-300'><FontAwesomeIcon icon={faEye} />{" "}{blog.view_count}</button>
+            </li>
+            <li>
+              <a className='p-3 rounded-full border hover:bg-gray-300' href="#comments"><FontAwesomeIcon icon={faPen} />{" "}{blog.comments.length}</a>
+            </li>
+          </ul>
+        </aside>
         <div className="flex-center">
           {
             blog.intro.image ? (<div className="relative md:w-3/4 w-4/5 h-64 md:h-96">
-            <Image src={blog.intro.image} alt="cover_img" layout="fill" objectFit="cover" />
-          </div>): (<><br /><br /><br /></>)
+              <Image src={blog.intro.image} alt="cover_img" layout="fill" objectFit="cover" />
+            </div>) : (<><br /><br /><br /></>)
           }
-      
+
         </div>
         {/* blog title */}
         <div className="text-center">
@@ -126,14 +159,14 @@ const BlogDetail = () => {
                   </p>
                   <div className="flex-center md:my-16 my-8"> {
                     sec.image ? (<div className="relative md:w-3/4 w-4/5 md:h-96 h-40">
-                    <Image
-                      src={sec.image}
-                      alt="example"
-                      layout="fill"
-                    />
-                  </div>): <br />
+                      <Image
+                        src={sec.image}
+                        alt="example"
+                        layout="fill"
+                      />
+                    </div>) : <br />
                   }
-                    
+
                   </div>
                 </section>
               ))
@@ -145,7 +178,7 @@ const BlogDetail = () => {
                 <Avatar dimension="md:w-20 md:h-20 h-10 w-10" href={`/users/${blog.author._id}`} src={blog.author.picture} />
                 <div>
                   <strong>{blog.author.firstName} {blog.author.lastName}</strong>
-                  <p>{blog.author.username}</p>
+                  <p>{blog.author.username} &bull; Joined at {dateToMonthDay(blog.author.createdAt)}</p>
                   <br />
                   <br />
                   <p>

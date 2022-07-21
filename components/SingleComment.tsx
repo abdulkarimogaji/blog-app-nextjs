@@ -25,7 +25,7 @@ const SingleComment = ({ data }: { data: Comment}) => {
         <div>
 
         <div className="md:p-6 p-3 border border-gray-300 rounded-lg md:mb-4 mb-2">
-          <strong className="mb-3 block">{data.author.username} <span className="text-gray-400 text-sm">! {dateToMonthDay(data.createdAt)}</span></strong> 
+          <strong className="mb-3 block">{data.author.username} <span className="text-gray-400 text-sm">&bull;{dateToMonthDay(data.createdAt)}</span></strong> 
           {data.text}
         </div>
         <div className="flex btn-hover-container">

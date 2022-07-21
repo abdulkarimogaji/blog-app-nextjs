@@ -19,6 +19,10 @@ body {
   scroll-behavior: smooth;
 }
 
+.bg-mybg2 {
+  background-color: hsl(34, 57%, 94%);
+}
+
 
 :root {
   --primary-clr: rgb(34, 60, 80);

@@ -33,7 +33,7 @@ const Home = () => {
 
   if (isSuccess) {
     return (
-      <div className="flex border  md:pt-16 pb-16 md:px-8 gap-4">
+      <div className="flex border md:pt-16 pt-8 pb-16 md:px-8 gap-4">
         <SideBar />
         <div className='flex flex-col md:gap-8 gap-2 container'>
           {
