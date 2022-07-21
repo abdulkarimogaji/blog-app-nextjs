@@ -33,9 +33,16 @@ const Home = () => {
   if (isLoading) return <Spinner />;
 
   if (isSuccess) {
+    const tags = new Set<string>();
+    data.data.data.forEach((blog) => {
+      for (let i = 0; i < blog.tags.length; i++) {
+        const tag = blog.tags[i];
+        tags.add(tag);
+      }
+    });
     return (
       <div className="flex border py-16 md:px-8 gap-4">
-        <SideBar />
+        <SideBar tags={Array.from(tags)} setFilterTag={setFilterTag} />
         <div className="flex flex-col md:gap-8 gap-2 container">
           {filterTag ? (
             <h1 className="text-xl font-semibold">
