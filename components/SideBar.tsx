@@ -1,5 +1,3 @@
-import { faBookOpen, faHeart, faHomeAlt, faTags } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 
 const SideBar = () => {
@@ -20,9 +18,7 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/" passHref>
-                <a className='sidenav-hover block p-3 rounded-lg'><span>&#128736;</span><span className='ml-4'>Issues</span></a>
-              </Link>
+                <a className='sidenav-hover block p-3 rounded-lg' target="_blank" rel="noreferrer" href="https://github.com/AbdulkarimOgaji/blog-app-nextjs/issues"><span>&#128736;</span><span className='ml-4'>Issues</span></a>
             </li>
             <li>
               <button className='sidenav-hover container p-3 rounded-lg flex justify-start'><span>&#128071;</span><span className='ml-4'>Tags</span></button>
@@ -40,9 +36,7 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/" passHref>
-                <a className='sidenav-hover block p-3 rounded-lg'><span>&#128188;</span><span className='ml-4'>About</span></a>
-              </Link>
+                <a className='sidenav-hover block p-3 rounded-lg' target="_blank" rel="noreferrer" href="https://github.com/AbdulkarimOgaji/blog-app-nextjs#readme"><span>&#128188;</span><span className='ml-4'>About</span></a>
             </li>
             <li>
               <Link href="/" passHref>
@@ -50,9 +44,7 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/" passHref>
-                <a className='sidenav-hover block p-3 rounded-lg'><span>&#128214;</span><span className='ml-4'>Guides</span></a>
-              </Link>
+                <a className='sidenav-hover block p-3 rounded-lg' target="_blank" rel="noreferrer" href="https://github.com/AbdulkarimOgaji/blog-app-nestjs#readme"><span>&#128214;</span><span className='ml-4'>Guides</span></a>
             </li>
             <li>
               <Link href="/" passHref>
