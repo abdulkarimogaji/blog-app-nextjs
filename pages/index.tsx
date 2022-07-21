@@ -1,18 +1,23 @@
+import { faHomeAlt, faTags } from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import { useState } from 'react'
-import {  useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import BlogCard from '../components/BlogCard'
 import Spinner from '../components/Spinner'
 import { request } from '../utils/axios-utils'
 import { BlogType, MyResponseType } from '../utils/types'
+import SideBar from '../components/SideBar'
 
 
 const fetchBlogs = (page: number) => {
-  return request({ url: `/blogs?page=${page}&limit=10`})
+  return request({ url: `/blogs?page=${page}&limit=10` })
 }
 
 const Home = () => {
   const [page, setPage] = useState(1)
-  const { isError, isSuccess, isLoading, data, error } = useQuery<MyResponseType<BlogType[]>, any>(["blogs", page], () => fetchBlogs(page), { keepPreviousData: true})
+  const { isError, isSuccess, isLoading, data, error } = useQuery<MyResponseType<BlogType[]>, any>(["blogs", page], () => fetchBlogs(page), { keepPreviousData: true })
 
 
   const [filterTag, setFilterTag] = useState("")
@@ -28,18 +33,21 @@ const Home = () => {
 
   if (isSuccess) {
     return (
-      <div className="md:w-2/3 w-4/5 flex flex-col justify-center navbar-offset my-center md:pt-16 pt-32  pb-16 gap-4">
-        {
-          filterTag &&
-        <h1 className='text-xl font-semibold'>Blogs for tag &quot{filterTag}&quot: <button className='md:p-2 p-1 md:px-4 mr-4 px-2 text-xs md:text-sm action-btn rounded-lg' onClick={() => setFilterTag("")}>Clear</button></h1>
-        }
-        {
-          data?.data.data.filter(isTag).map(blog => <BlogCard data={blog} key={blog._id} setFilterTag={setFilterTag} />)
-        }
+      <div className="flex border  md:pt-16 pb-16 md:px-8 gap-4">
+        <SideBar />
+        <div className='flex flex-col md:gap-8 gap-2 container'>
+          {
+            filterTag ?
+              <h1 className='text-xl font-semibold'>Blogs for tag <q>{filterTag}</q>: <button className='border rounded-lg text-xl font-normal bg-gray-200 px-4' onClick={() => setFilterTag("")}>&times;</button></h1> : <h1 className='text-xl font-semibold'>Trending Blogs</h1>
+          }
+          {
+            data?.data.data.filter(isTag).map(blog => <BlogCard data={blog} key={blog._id} setFilterTag={setFilterTag} />)
+          }
+        </div>
       </div>
     )
   }
-  
+
 }
 
 export default Home

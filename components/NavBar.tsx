@@ -36,7 +36,7 @@ const NavBar = () => {
     router.replace("/")
   }
   return (
-    <header className="navBar">
+    <header className="navBar pt-2 md:pt-0">
       <h1 className="logo"><Link href="/" passHref><a className="text-3xl">BLOGNADO</a></Link></h1>
       <input
         type="checkbox"
@@ -56,14 +56,12 @@ const NavBar = () => {
       <ul className="nav-auth">
         {isLoggedIn ? (
           <>
-            <li>
-              <Avatar dimension="md:w-12 md:h-12 h-7 w-7" href="/users/me" src={userData.picture} />
-            </li>
-            <li>
-              <button className="p-2 text-sm px-4 btn-outline border rounded-lg" onClick={logout}>Logout</button>
-            </li>
+            
             <li>
               <button className="p-2 text-sm px-4 btn-outline border rounded-lg" onClick={() => router.push("/blogs/write")}>New Blog</button>
+            </li>
+            <li>
+              <Avatar dimension="md:w-8 md:h-8 h-7 w-7" href="/users/me" src={userData.picture} />
             </li>
           </>
         ) : <>

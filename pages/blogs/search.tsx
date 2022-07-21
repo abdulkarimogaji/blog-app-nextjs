@@ -27,8 +27,8 @@ const Home = () => {
 
   if (isSuccess) {
     return (
-      <div className="md:w-2/3 w-4/5 flex flex-col justify-center navbar-offset my-center md:pt-16 pt-32  pb-16 gap-4">         
-        <div className='text-xl  font-semibold text-center'>{data.data.data.length !== 0 ? `Search Results for "${searchKey}"`: `No Result for "${searchKey}"`}</div>        
+      <div className="md:w-2/3 w-4/5 flex flex-col justify-center  my-center md:pt-16 pt-32  pb-16 gap-4">         
+        <h1 className='text-xl  font-semibold text-center container'>{data.data.data.length !== 0 ? `Search Results for "${searchKey}"`: `No Result for "${searchKey}"`}</h1>        
         {
           data?.data.data.filter(isTag).map(blog => <BlogCard data={blog} key={blog._id} setFilterTag={setFilterTag} />)
         }

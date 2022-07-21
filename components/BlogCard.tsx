@@ -1,4 +1,4 @@
-import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons"
+import { faHeart, faComment, faEye } from "@fortawesome/free-regular-svg-icons"
 import { faPen } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
@@ -11,7 +11,7 @@ import Avatar from "./Avatar"
 const BlogCard = ({ data, setFilterTag }: { data: BlogType, setFilterTag: any}) => {
   const router = useRouter()
   return (
-    <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-6 gap-2">
+    <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-6 gap-2 border">
       <Avatar dimension="md:w-10 md:h-10 w-7 h-7" href={`/users/${data.author._id}`} src={data.author.picture} />
       <div className="container">
         <p>{data.author.username}</p>
@@ -27,16 +27,24 @@ const BlogCard = ({ data, setFilterTag }: { data: BlogType, setFilterTag: any}) 
         <div className="flex md:justify-between flex-wrap md:mt-8 mt-2 text-xs md:text-base">
           <div className="flex btn-hover-container items-center">
             <div>
-              <FontAwesomeIcon icon={faHeart} color="#777" />
+              <FontAwesomeIcon icon={faEye} color="#777" />
+              <span className="ml-2 md:inline hidden">Views</span>
               {" "}
-              Views({data.view_count + data.like_count})
+              {data.view_count}
+            </div>
+            <div>
+              <FontAwesomeIcon icon={faHeart} color="#777" />
+              <span className="ml-2 md:inline hidden">Reactions</span>
+              {" "}
+              {data.like_count}
             </div>
             <button onClick={() => {
               router.push(`/blogs/${data._id}#comments`)
             }}>
               <FontAwesomeIcon icon={faPen}  color="#777"/>
+              <span className="ml-2 md:inline hidden">Comments</span>
               {" "}
-              Comments({data.comments.length})
+              {data.comments.length}
             </button>
           </div>
           <div className="md:block hidden">

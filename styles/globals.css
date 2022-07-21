@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&family=Fontdiner+Swanky&family=New+Rocker&family=Saira+Semi+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&family=Hind+Siliguri&family=Fontdiner+Swanky&family=New+Rocker&family=Saira+Semi+Condensed:wght@300&display=swap');
 
 
 @tailwind base;
@@ -14,14 +14,11 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Saira Semi Condensed', sans-serif;
-  background-color: #eee;
+  font-family: 'Hind Siliguri', sans-serif;
+  background-color: hsl(34, 57%, 94%);
   scroll-behavior: smooth;
 }
 
-.navbar-offset {
-  margin-top: 8rem;
-}
 
 :root {
   --primary-clr: rgb(34, 60, 80);
@@ -40,7 +37,7 @@ header h1 {
 }
 
 header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 999;
@@ -205,9 +202,6 @@ left: -2rem
   margin: 0 auto;
 }
 @media screen and (min-width: 800px) {
-  .navbar-offset {
-    margin-top: 4rem;
-  }
   header {
     display: grid;
     grid-template-columns: 1fr 1fr 2.5fr 1fr 3fr 1fr;
@@ -398,3 +392,10 @@ input[type="checkbox"].toggle:disabled + label::after {
   background-color: hsl(16, 100%, 56%);
   color: white;
 }
+
+.sidenav-hover:hover {
+  background-color: hsl(206, 40%, 82%);
+  text-decoration: underline;
+  color: blue
+}
+

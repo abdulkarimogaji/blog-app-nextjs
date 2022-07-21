@@ -72,7 +72,7 @@ const BlogDetail = () => {
   if (isSuccess) {
     const { data: blog } = resp?.data!
     return (
-      <section className="navbar-offset bg-white">
+      <section className=" bg-white">
         <div className="flex-center">
           {
             blog.intro.image ? (<div className="relative md:w-3/4 w-4/5 h-64 md:h-96">
@@ -94,7 +94,7 @@ const BlogDetail = () => {
         </div>
 
         {/* blog content */}
-        <div className="flex-center">
+        <article className="flex-center">
           <div className="w-3/4 md:w-4/5">
             {/* Intro */}
             <section className="md:my-16 my-8 md:px-32 px-4 ">
@@ -183,7 +183,7 @@ const BlogDetail = () => {
               }
             </div>
           </div>
-        </div>
+        </article>
       </section>
     );
   }
