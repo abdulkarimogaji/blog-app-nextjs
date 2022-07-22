@@ -46,10 +46,12 @@ const NavBar = () => {
         setToken((prev) => token);
         fetchUser();
         setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
       }
     };
     verifylogin();
-  }, []);
+  });
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
