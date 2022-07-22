@@ -2,7 +2,7 @@ import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faHouse, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { request } from "../utils/axios-utils";
 import { BlogType } from "../utils/types";
 
@@ -10,21 +10,22 @@ const viewBlog = (id: string) => {
   return request({ url: `/blogs/${id}/view`, method: "patch" });
 };
 
-const likeBlogMutation = (id: string) => {
+const likeBlog = (id: string) => {
   return request({ url: `/blogs/${id}/like`, method: "patch" });
 };
 
 const BlogActions = ({ blog }: { blog: BlogType }) => {
-  const queryClient = useQueryClient();
   // view blog on page load
   useQuery(["blogs-view", blog._id], () => viewBlog(blog._id));
 
   // like blog
-  const { mutate: likeBlog } = useMutation(likeBlogMutation, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["blogs", blog._id]);
-    },
-  });
+  const { refetch } = useQuery(
+    ["blogs-like", blog._id],
+    () => likeBlog(blog._id),
+    {
+      enabled: false,
+    }
+  );
 
   return (
     <aside className="fixed left-0 md:top-0 bottom-0 md:w-24 container rounded-lg flex items-center justify-center">
@@ -39,7 +40,7 @@ const BlogActions = ({ blog }: { blog: BlogType }) => {
         <li>
           <button
             className="p-3 rounded-full border hover:bg-gray-300"
-            onClick={() => likeBlog(blog._id)}
+            onClick={() => refetch()}
           >
             <span>&#128077;</span> {blog.like_count}
           </button>
