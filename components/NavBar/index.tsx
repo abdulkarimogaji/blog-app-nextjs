@@ -17,16 +17,22 @@ const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem("blognado-access-token") !== "");
+    if (localStorage.getItem("blognado-access-token")) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
   });
 
-  const handleClick = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     router.push({
       pathname: `/blogs/search`,
       query: {
         searchKey: searchTerm,
       },
     });
+    setSearchTerm("");
   };
 
   const logout = () => {
@@ -56,17 +62,17 @@ const NavBar = () => {
         <span className={styles.hamburger}></span>
       </label>
       <nav>
-        <div className={styles.searchBar}>
+        <form className={styles.searchBar} onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Search Blogs"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.currentTarget.value)}
           />
-          <button className={styles.searchBtn} onClick={handleClick}>
+          <button className={styles.searchBtn}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
-        </div>
+        </form>
       </nav>
       <ul className={styles.navAuth}>
         {isLoggedIn ? (

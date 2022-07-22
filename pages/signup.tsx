@@ -1,3 +1,4 @@
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -20,6 +21,12 @@ type Credential = {
 const signUp = (data: Credential) => {
   return request({ url: "/users", data, method: "post" });
 };
+
+const handleGoogleLogin = (body: CredentialResponse) => {
+  console.log("body", body);
+  return request({ url: "/auth/google/login", method: "post", data: body });
+};
+
 const SignUp = () => {
   const [errorText, setErrorText] = useState("");
   const [cred, setCred] = useState<Credential>({} as Credential);
@@ -32,6 +39,42 @@ const SignUp = () => {
     const url = await handleImageUpload();
     mutate({ ...cred, picture: url });
   };
+
+  const onSuccess = (data: MyResponseType<LoginResponse>) => {
+    console.log("data, ", data);
+    const cred = {
+      username: data.data.data.user.username,
+      picture: data.data.data.user.picture,
+      access_token: data.data.data.access_token,
+      _id: data.data.data.user._id,
+      email: data.data.data.user.email,
+    };
+    dispatch({
+      type: "LOGIN",
+      payload: cred,
+    });
+    localStorage.setItem("blognado-access-token", data.data.data.access_token);
+    router.push(`/users/me`);
+  };
+
+  const onError = (err: any) => {
+    if (err.response.status == 401) {
+      setErrorText("Incorrect Password");
+    } else if (err.response.status == 404) {
+      setErrorText("Credentials not found");
+    } else if (err.response.status == 400) {
+      setErrorText("Incorrect email");
+    }
+  };
+
+  const { mutate: googlelogin, isLoading: loading } = useMutation<
+    MyResponseType<LoginResponse>,
+    string,
+    CredentialResponse,
+    string
+  >(handleGoogleLogin, {
+    onSuccess,
+  });
 
   const handleImageUpload = async () => {
     let formData = new FormData();
@@ -55,45 +98,38 @@ const SignUp = () => {
     onMutate(variables) {
       console.log("mutatign", variables);
     },
-    onSuccess: (data) => {
-      localStorage.setItem(
-        "blognado-access-token",
-        data.data.data.access_token
-      );
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          ...data.data.data.user,
-          access_token: data.data.data.access_token,
-        },
-      });
-      router.push(`/users/me`);
-    },
-    onError: (err: any) => {
-      if (err.response.status == 401) {
-        setErrorText("Incorrect Password");
-      } else if (err.response.status == 404) {
-        setErrorText("Credentials not found");
-      } else if (err.response.status == 400) {
-        setErrorText("Incorrect email");
-      }
-    },
+    onSuccess,
+    onError,
   });
 
   const handleSetPicture = (e: any) => {
     setPicture(e.target.files[0]);
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || loading) return <Spinner />;
 
   return (
-    <div className=" md:p-16 p-8">
+    <div className="md:p-16 p-4 mt-16">
       <h1 className="md:text-3xl text-lg md:mb-16 mb-8">
         Sign up to <strong>Blognado</strong>
       </h1>
+      <section className="bg-white p-8 border border-gray-300 rounded-lg md:w-4/5 my-center">
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="text-lg font-semibold">Continue With Google</h1>
+          <GoogleLogin
+            onSuccess={googlelogin}
+            onError={() => {
+              setErrorText("Failed to login with google");
+            }}
+          />
+        </div>
+      </section>
       <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
         <h1>{errorText}</h1>
         <section className="bg-white md:p-8 p-4 border border-gray-300 rounded-lg my-8">
+          <h1 className="text-lg font-semibold text-center">
+            Signup With Email
+          </h1>
           <div className="my-12">
             <p className="md:text-lg text-base font-semibold mb-4">
               FirstName*

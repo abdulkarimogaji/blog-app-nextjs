@@ -41,7 +41,7 @@ const Home = () => {
       }
     });
     return (
-      <div className="flex border py-16 md:px-8 gap-4">
+      <div className="flex border py-16 md:px-8 gap-4 mt-16">
         <SideBar tags={Array.from(tags)} setFilterTag={setFilterTag} />
         <div className="flex flex-col md:gap-8 gap-2 container">
           {filterTag ? (
