@@ -9,20 +9,47 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { MyResponseType, User } from "../../utils/types";
+import { useQuery } from "react-query";
+import { request } from "../../utils/axios-utils";
+
+const getUser = (token: string) => {
+  return request({
+    url: "/users/me",
+  });
+};
 
 const NavBar = () => {
   const { userData, dispatch } = useUserContext();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState("");
+  const { refetch: fetchUser } = useQuery<MyResponseType<User>, string>(
+    ["me"],
+    () => getUser(token),
+    {
+      enabled: false,
+      onSuccess: (data) => {
+        dispatch({
+          type: "LOGIN",
+          payload: { ...data.data.data, access_token: token },
+        });
+      },
+    }
+  );
 
   useEffect(() => {
-    if (localStorage.getItem("blognado-access-token")) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  });
+    const verifylogin = async () => {
+      const token = localStorage.getItem("blognado-access-token");
+      if (token) {
+        setToken((prev) => token);
+        fetchUser();
+        setIsLoggedIn(true);
+      }
+    };
+    verifylogin();
+  }, []);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
