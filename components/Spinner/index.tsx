@@ -4,10 +4,10 @@ const Spinner = () => {
   return (
     <section className={styles.container}>
       <div className={styles.spinner}>
-        <div className={styles.spinnerText}>B</div>
-        <div className={`${styles.spinnerSector} ${styles.spinnerOne}`}></div>
-        <div className={`${styles.spinnerSector} ${styles.spinnerTwo}`}></div>
-        <div className={`${styles.spinnerSector} ${styles.spinnerThree}`}></div>
+        <div className="relative">
+          <span className={styles.spinnerText}>B</span>
+          <img src="/tornado.gif" />
+        </div>
       </div>
     </section>
   );
