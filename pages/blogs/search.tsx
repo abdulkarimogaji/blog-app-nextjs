@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-import BlogCard from "../../components/BlogCard";
-import SideBar from "../../components/SideBar";
+import BlogList from "../../components/BlogList";
 import Spinner from "../../components/Spinner";
 import { request } from "../../utils/axios-utils";
 import { BlogType, MyResponseType } from "../../utils/types";
@@ -17,8 +16,7 @@ const fetchBlogs = (page: number, searchKey: string) => {
 const Home = () => {
   // for pagination
   const [page, setPage] = useState(1);
-  const { searchKey } = useRouter().query;
-  const [filterTag, setFilterTag] = useState("");
+  const searchKey = useRouter().query.searchKey as string;
 
   const { isError, isSuccess, isLoading, data, error } = useQuery<
     MyResponseType<BlogType[]>,
@@ -27,10 +25,6 @@ const Home = () => {
     keepPreviousData: true,
   });
 
-  const isTag = (blog: BlogType) => {
-    if (!filterTag) return true;
-    return blog.tags.includes(filterTag);
-  };
   if (isError) {
     return <div>{error.message}</div>;
   }
@@ -45,21 +39,8 @@ const Home = () => {
         tags.add(tag);
       }
     });
-    return (
-      <div className="flex border py-16 md:px-8 gap-4 mt-16">
-        <SideBar tags={Array.from(tags)} setFilterTag={setFilterTag} />
-        <div className="flex flex-col md:gap-8 gap-2 container">
-          <h1 className="text-xl font-semibold text-center container">
-            {data.data.data.length !== 0
-              ? `Search Results for "${searchKey}"`
-              : `No Result for "${searchKey}"`}
-          </h1>
-          {data?.data.data.filter(isTag).map((blog) => (
-            <BlogCard data={blog} key={blog._id} setFilterTag={setFilterTag} />
-          ))}
-        </div>
-      </div>
-    );
+    const blogs = data?.data.data;
+    return <BlogList blogs={blogs} tags={tags} searchKey={searchKey} />;
   }
 };
 
