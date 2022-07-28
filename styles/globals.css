@@ -1,11 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&family=Hind+Siliguri&family=Fontdiner+Swanky&family=New+Rocker&family=Saira+Semi+Condensed:wght@300&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&family=Hind+Siliguri&family=Fontdiner+Swanky&family=New+Rocker&family=Saira+Semi+Condensed:wght@300&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
 
 :root {
   --primary-clr: rgb(34, 60, 80);
@@ -13,16 +10,15 @@
   --primary-bg-clr: hsl(34, 57%, 94%);
 }
 
-
 ol {
-  list-style-type: decimal ;
+  list-style-type: decimal;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Hind Siliguri', sans-serif;
+  font-family: "Hind Siliguri", sans-serif;
   background-color: var(--primary-bg-clr);
   scroll-behavior: smooth;
 }
@@ -31,9 +27,9 @@ body {
   background-color: hsl(206, 40%, 82%);
 }
 .profile-image {
-  left: -2rem
-  }
-  
+  left: -2rem;
+}
+
 .bg-myborder {
   border-color: hsl(206, 40%, 82%);
 }
@@ -42,20 +38,18 @@ body {
   background-color: var(--primary-bg-clr);
 }
 
-
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
 .profile-image {
-  left: calc(50% - 4rem)
+  left: calc(50% - 4rem);
 }
 
 .my-center {
   margin: 0 auto;
 }
-
 
 .flex-center {
   display: flex;
@@ -66,7 +60,7 @@ body {
   margin-left: 5px;
   text-decoration: underline;
   text-underline-offset: 4px;
-  color:#1c7488;
+  color: #1c7488;
   transition: 400ms;
 }
 
@@ -74,25 +68,23 @@ body {
   color: var(--link-hover-clr);
 }
 
-
 .link-hover {
   transition: 250ms;
 }
 
-.link-hover:hover, .link-hover:focus {
+.link-hover:hover,
+.link-hover:focus {
   color: var(--link-hover-clr);
 }
 
 .btn-hover-container > * {
   padding: 0.2rem 0.5rem;
   border: 1px solid white;
-
 }
 .btn-hover-container > div:hover,
 .btn-hover-container > button:hover,
 .btn-hover-container > div:focus,
-.btn-hover-container > button:focus
-{
+.btn-hover-container > button:focus {
   border-color: #eee;
   border-radius: 5px;
   background-color: rgba(238, 238, 238, 0.3);
@@ -110,20 +102,24 @@ body {
   transition: 250ms;
 }
 
-.action-btn:hover, .action-btn:focus {
+.action-btn:hover,
+.action-btn:focus {
   background-color: hsl(16, 100%, 56%);
 }
 .action-btn:active {
   background-color: hsl(16, 100%, 46%);
 }
-.action-btn2:hover, .action-btn2:focus {
+.action-btn2:hover,
+.action-btn2:focus {
   background-color: hsl(206, 40%, 16%);
 }
 .action-btn2:active {
   background-color: hsl(206, 40%, 12%);
 }
 
-
+.link-hover:hover {
+  color: hsl(16, 100%, 56%);
+}
 
 /* SLIDE TOGGLER */
 input[type="checkbox"].toggle {
@@ -146,7 +142,7 @@ input[type="checkbox"].toggle + label::before {
   height: 1em;
   background-color: hsl(0, 80%, 90%);
   border-radius: 1em;
-  margin-right: .25em;
+  margin-right: 0.25em;
   transition: background-color 200ms ease-in-out;
 }
 
@@ -156,9 +152,9 @@ input[type="checkbox"].toggle + label::after {
   align-items: center;
   position: absolute;
   content: "\2715";
-  font-size: .5em;
+  font-size: 0.5em;
   height: 3.9em;
-  left: .2em;
+  left: 0.2em;
   width: 3.8em;
   height: 3.8em;
   background-color: hsl(16, 100%, 46%);
@@ -186,7 +182,7 @@ input[type="checkbox"].toggle:disabled + label {
 }
 
 input[type="checkbox"].toggle:disabled + label::before {
-  background-color: #CCC;
+  background-color: #ccc;
 }
 
 input[type="checkbox"].toggle:disabled + label::after {
@@ -194,11 +190,12 @@ input[type="checkbox"].toggle:disabled + label::after {
 }
 
 .btn-outline {
- transition: 250ms;
- border: 1px solid hsl(16, 100%, 56%);
+  transition: 250ms;
+  border: 1px solid hsl(16, 100%, 56%);
 }
 
-.btn-outline:hover, .btn-outline:focus {
+.btn-outline:hover,
+.btn-outline:focus {
   background-color: hsl(16, 100%, 56%);
   color: white;
 }
@@ -206,6 +203,5 @@ input[type="checkbox"].toggle:disabled + label::after {
 .sidenav-hover:hover {
   background-color: hsl(206, 40%, 82%);
   text-decoration: underline;
-  color: blue
+  color: blue;
 }
-
