@@ -8,15 +8,17 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 md:p-16 p-4 flex justify-between">
+    <footer className="bg-gray-200 md:p-16 mt-8 p-4 flex justify-between">
       <div>
-        <h1 className="text-xl font-bold">Subscribe to our newsletter</h1>
-        <p>
+        <h1 className="md:text-xl text-base font-bold">
+          Subscribe to our newsletter
+        </h1>
+        <p className="text-xs md:text-base">
           Don't join our newsletter for inspiring stories about the world and
           how you can make a difference.
         </p>
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-wrap md:gap-4 gap-2">
         <a
           href="https://twitter.com/abdoolkareem_"
           target="_blank"
@@ -45,7 +47,7 @@ const Footer = () => {
         <Link href="/" passHref>
           <a className="link-hover">
             <h1
-              className="font-bold text-lg"
+              className="font-bold md:text-lg text-sm"
               style={{
                 fontFamily: "Fontdiner Swanky",
               }}
