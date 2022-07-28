@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { UserContextProvider } from "../context/useUserContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Footer from "../components/Footer";
 
 const client = new QueryClient();
 
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <UserContextProvider>
           <NavBar />
           <Component {...pageProps} />
+          <Footer />
           <ReactQueryDevtools />
         </UserContextProvider>
       </QueryClientProvider>
