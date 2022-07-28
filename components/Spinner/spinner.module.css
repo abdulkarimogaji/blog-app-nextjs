@@ -4,7 +4,6 @@
   right: 0;
   bottom: 0;
   left: 0;
-  backdrop-filter: 1px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,38 +23,9 @@
 .spinnerText {
   font-size: 2rem;
   font-weight: 900;
-  color: hsl(206, 40%, 26%);
-  font-family: "Fontdiner Swanky";
-}
-
-.spinnerSector {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  color: hsl(206, 40%, 16%);
   position: absolute;
-  border-radius: 50%;
-  border: 4px solid transparent;
-  mix-blend-mode: overlay;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.spinnerOne {
-  border-top: 7px solid hsl(16, 100%, 46%);
-  animation: rotate 1500ms infinite alternate ease-in-out;
-}
-.spinnerTwo {
-  border-top: 7px solid hsl(206, 40%, 26%);
-  animation: rotate 2500ms infinite;
-}
-.spinnerThree {
-  border-top: 7px solid hsl(206, 40%, 26%);
-  animation: rotate 1000ms infinite;
+  top: -5px;
+  left: 20px;
+  font-family: "Fontdiner Swanky";
 }
