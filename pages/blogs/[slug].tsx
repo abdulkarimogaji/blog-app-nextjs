@@ -14,8 +14,8 @@ import { useState } from "react";
 
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-const fetchBlog = (id: string) => {
-  return request({ url: `/blogs/${id}` });
+const fetchBlog = (slug: string) => {
+  return request({ url: `/blogs/${slug}` });
 };
 
 const sendComment = (body: any) => {
@@ -27,15 +27,15 @@ const BlogDetail = () => {
   const queryClient = useQueryClient();
   const [newComment, setNewComment] = useState("");
   const { userData } = useUserContext();
-  const { id } = router.query;
+  const { slug } = router.query;
 
   // fetch blog
   const {
     data: resp,
     isSuccess,
     isLoading,
-  } = useQuery<MyResponseType<BlogType>>(["blogs", id as string], () =>
-    fetchBlog(id as string)
+  } = useQuery<MyResponseType<BlogType>>(["blogs", slug as string], () =>
+    fetchBlog(slug as string)
   );
 
   // create comment with optimistic updates
@@ -43,29 +43,35 @@ const BlogDetail = () => {
     sendComment,
     {
       onMutate: async (newComment) => {
-        await queryClient.cancelQueries(["blogs", id]);
+        await queryClient.cancelQueries(["blogs", slug as string]);
         const previousBlog = queryClient.getQueryData<MyResponseType<BlogType>>(
-          ["blogs", id]
+          ["blogs", slug as string]
         );
-        queryClient.setQueryData<any>(["blogs", id], (prev: any) => {
-          newComment.author = userData;
-          newComment.createdAt = new Date(Date.now()).toLocaleDateString();
-          return {
-            ...prev,
-            data: {
-              ...prev?.data,
+        queryClient.setQueryData<any>(
+          ["blogs", slug as string],
+          (prev: any) => {
+            newComment.author = userData;
+            newComment.createdAt = new Date(Date.now()).toLocaleDateString();
+            return {
+              ...prev,
               data: {
-                ...prev?.data.data,
-                comments: [newComment, ...prev?.data.data.comments],
+                ...prev?.data,
+                data: {
+                  ...prev?.data.data,
+                  comments: [newComment, ...prev?.data.data.comments],
+                },
               },
-            },
-          };
-        });
+            };
+          }
+        );
         setNewComment("");
         return { previousBlog };
       },
       onError: (_error, _v, context: any) => {
-        queryClient.setQueryData(["blogs", id], context.previousBlog);
+        queryClient.setQueryData(
+          ["blogs", slug as string],
+          context.previousBlog
+        );
       },
       onSettled: () => {},
     }

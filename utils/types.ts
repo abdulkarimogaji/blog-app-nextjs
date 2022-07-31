@@ -2,7 +2,7 @@ type Section = {
   title: string;
   content: string;
   image: string;
-}
+};
 
 export type Comment = {
   blog: string;
@@ -12,7 +12,7 @@ export type Comment = {
   text: string;
   like_count: number;
   isAnonymous: boolean;
-}
+};
 export interface BlogType {
   _id: string;
   title: string;
@@ -25,19 +25,19 @@ export interface BlogType {
   comments: Comment[];
   like_count: number;
   view_count: number;
+  slug: string;
 }
 
 export interface MyResponseType<T> {
   data: {
-    data: T,
-  }
+    data: T;
+  };
 }
-
 
 export type LoginResponse = {
   user: User;
   access_token: string;
-}
+};
 
 export interface User {
   createdAt: string;
