@@ -26,7 +26,7 @@ const BlogCard = ({ data, setFilterTag }: Props) => {
       <div className="container">
         <p>{data.author.username}</p>
         <small>{dateToMonthDay(data.createdAt)}</small>
-        <Link href={`/blogs/${data._id}`} passHref>
+        <Link href={`/blogs/${data.slug}`} passHref>
           <a className="link-hover">
             <h1 className="md:text-2xl text-base font-bold my-3">
               {data.title}
@@ -54,7 +54,7 @@ const BlogCard = ({ data, setFilterTag }: Props) => {
             </div>
             <button
               onClick={() => {
-                router.push(`/blogs/${data._id}#comments`);
+                router.push(`/blogs/${data.slug}#comments`);
               }}
             >
               <FontAwesomeIcon icon={faPen} color="#777" />
