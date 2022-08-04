@@ -90,11 +90,6 @@ const Login = () => {
 
   return (
     <>
-      <Script id="login-script">
-        {document.addEventListener("load", () => analyse("login-page"), {
-          once: true,
-        })}
-      </Script>
       <div className="md:p-16 p-4 mt-16">
         <h1 className="text-lg md:text-3xl md:mb-16 mb-4">Login</h1>
         <h1 className="text-lg text-red-600">{errorText}</h1>
