@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
+import Script from "next/script";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
 import BlogList from "../../components/BlogList";
 import Spinner from "../../components/Spinner";
+import { analyse } from "../../utils/analytics";
 import { request } from "../../utils/axios-utils";
 import { BlogType, MyResponseType } from "../../utils/types";
 
@@ -40,7 +42,16 @@ const Home = () => {
       }
     });
     const blogs = data?.data.data;
-    return <BlogList blogs={blogs} tags={tags} searchKey={searchKey} />;
+    return (
+      <>
+        <Script id="search-script">
+          {document.addEventListener("scroll", () => analyse("search-scroll"), {
+            once: true,
+          })}
+        </Script>
+        <BlogList blogs={blogs} tags={tags} searchKey={searchKey} />
+      </>
+    );
   }
 };
 

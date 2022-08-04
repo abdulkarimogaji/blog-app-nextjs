@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { useState } from "react";
 
 import { BlogType } from "../utils/types";

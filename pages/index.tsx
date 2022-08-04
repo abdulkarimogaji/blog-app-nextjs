@@ -5,6 +5,8 @@ import Spinner from "../components/Spinner";
 import { request } from "../utils/axios-utils";
 import { BlogType, MyResponseType } from "../utils/types";
 import BlogList from "../components/BlogList";
+import Script from "next/script";
+import { analyse } from "../utils/analytics";
 
 const fetchBlogs = (page: number) => {
   return request({ url: `/blogs?page=${page}&limit=10` });
@@ -31,7 +33,17 @@ const Home = () => {
       }
     });
     const blogs = data?.data.data;
-    return <BlogList blogs={blogs} tags={tags} />;
+
+    return (
+      <>
+        <Script id="home-script">
+          {document.addEventListener("scroll", () => analyse("home-scroll"), {
+            once: true,
+          })}
+        </Script>
+        <BlogList blogs={blogs} tags={tags} />
+      </>
+    );
   }
 };
 
