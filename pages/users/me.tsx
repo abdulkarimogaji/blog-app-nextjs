@@ -1,34 +1,39 @@
-import { faChessBishop, faHeart, faNewspaper } from "@fortawesome/free-regular-svg-icons"
-import { faPen } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { useQuery } from "react-query"
-import Spinner from "../../components/Spinner"
-import { request } from "../../utils/axios-utils"
-import { dateToMonthDay } from "../../utils/date-utils"
-import { MyResponseType, User } from "../../utils/types"
-
+import {
+  faChessBishop,
+  faHeart,
+  faNewspaper,
+} from "@fortawesome/free-regular-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useQuery } from "react-query";
+import Spinner from "../../components/Spinner";
+import { request } from "../../utils/axios-utils";
+import { dateToMonthDay } from "../../utils/date-utils";
+import { MyResponseType, User } from "../../utils/types";
 
 const fetchUser = () => {
-  return request({ url: "/users/me"})
-}
+  return request({ url: "/users/me" });
+};
 
 const Profile = () => {
+  const router = useRouter();
+  const { data, isSuccess, isLoading } = useQuery<MyResponseType<User>>(
+    ["me"],
+    fetchUser,
+    {
+      onError(err) {
+        router.push("/login");
+      },
+    }
+  );
 
-  const router = useRouter()
-  const { data, isSuccess, isLoading } = useQuery<MyResponseType<User>>(["me"], fetchUser, {
-    onError(err) {
-      router.push('/login')
-    },
-  })
+  if (isLoading) return <Spinner />;
 
-
-  if (isLoading) return <Spinner />
-  
   if (isSuccess) {
-    const { data: user } = data.data
+    const { data: user } = data.data;
     return (
       <div>
         <div className="bg-mybg p-24"></div>
@@ -45,49 +50,48 @@ const Profile = () => {
               </div>
             </div>
             <div className="text-end">
-              <button className="p-2 text-xs px-4 action-btn2 rounded-lg">Edit Profile</button>
+              <button className="p-2 text-xs px-4 action-btn2 rounded-lg">
+                Edit Profile
+              </button>
             </div>
-            <h1 className="md:text-2xl text-lg font-semibold my-4">{user.firstName} {user.lastName}</h1>
+            <h1 className="md:text-2xl text-lg font-semibold my-4">
+              {user.firstName} {user.lastName}
+            </h1>
             <p className="my-4">{user.about}</p>
-            <p className="my-8 text-gray-400">Joined {dateToMonthDay(user.createdAt)} {" "}<FontAwesomeIcon icon={faChessBishop} color="#777" /></p>
+            <p className="my-8 text-gray-400">
+              Joined {dateToMonthDay(user.createdAt)}{" "}
+              <FontAwesomeIcon icon={faChessBishop} color="#777" />
+            </p>
           </div>
-          <div className="flex md:gap-8 gap-2 flex-wrap md:flex-nowrap container text-xs md:text-sm">
+          <div className="flex md:gap-4 gap-2 flex-wrap md:flex-nowrap container text-xs md:text-sm">
             <div className="md:w-1/3 container bg-white border rounded-lg p-2 bg-gray-100">
               <div className="my-2 p-2">
-                <FontAwesomeIcon icon={faNewspaper} color="#777" />
-                {" "}
-                Blogs written({ user.blogCount })
+                <FontAwesomeIcon icon={faNewspaper} color="#777" /> Blogs
+                written({user.blogCount})
               </div>
               <div className="my-2 p-2">
-                <FontAwesomeIcon icon={faPen} color="#777" />
-                {" "}
-                Comments written({ user.comments.length })
+                <FontAwesomeIcon icon={faPen} color="#777" /> Comments written(
+                {user.comments.length})
               </div>
               <div className="my-2 p-2">
-                <FontAwesomeIcon icon={faHeart} color="#777" />
-                {" "}
-                Tags Followed
+                <FontAwesomeIcon icon={faHeart} color="#777" /> Tags Followed
               </div>
             </div>
             <div className="md:w-2/3 container bg-white border rounded-lg p-2">
               <h2 className="text-lg font-semibold mb-4">Recent Comments</h2>
-              {
-                user.comments.map(com => (
-              <Link href={`/blogs/${com.blog}`} key={com._id} passHref>
-                <a className="p-2 cursor-pointer hover:bg-gray-100 focus:bg-gray-100 block">{com.text}</a>
-              </Link>
-                ))
-              }
+              {user.comments.map((com) => (
+                <Link href={`/blogs/${com.blog}`} key={com._id} passHref>
+                  <a className="p-2 cursor-pointer hover:bg-gray-100 focus:bg-gray-100 block">
+                    {com.text}
+                  </a>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-  
       </div>
-    )
+    );
   }
-  
-}
+};
 
-
-
-export default Profile
+export default Profile;
