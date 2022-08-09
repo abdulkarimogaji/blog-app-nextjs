@@ -8,8 +8,6 @@ import { request } from "../utils/axios-utils";
 import { LoginResponse, MyResponseType } from "../utils/types";
 
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
-import Script from "next/script";
-import { analyse } from "../utils/analytics";
 
 type Credential = {
   email: string;
@@ -45,7 +43,7 @@ const Login = () => {
       payload: cred,
     });
     localStorage.setItem("blognado-access-token", data.data.data.access_token);
-    router.push(`/users/me`);
+    router.push(`/u/me`);
   };
 
   const onError = (err: any) => {
@@ -89,70 +87,66 @@ const Login = () => {
   if (isLoading || loading) return <Spinner />;
 
   return (
-    <>
-      <div className="md:p-16 p-4 mt-16">
-        <h1 className="text-lg md:text-3xl md:mb-16 mb-4">Login</h1>
-        <h1 className="text-lg text-red-600">{errorText}</h1>
-        <section className="bg-white p-8 border border-gray-300 rounded-lg md:w-4/5 my-center">
-          <div className="flex flex-col items-center gap-4">
-            <h1 className="text-lg font-semibold">Continue With Google</h1>
-            <GoogleLogin
-              onSuccess={googlelogin}
-              onError={() => {
-                setErrorText("Failed to login with google");
-              }}
+    <div className="md:p-16 p-4 mt-16">
+      <h1 className="text-lg md:text-3xl md:mb-16 mb-4">Login</h1>
+      <h1 className="text-lg text-red-600">{errorText}</h1>
+      <section className="bg-white p-8 border border-gray-300 rounded-lg md:w-4/5 my-center">
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="text-lg font-semibold">Continue With Google</h1>
+          <GoogleLogin
+            onSuccess={googlelogin}
+            onError={() => {
+              setErrorText("Failed to login with google");
+            }}
+          />
+        </div>
+      </section>
+      <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
+        <section className="bg-white p-8 border border-gray-300 rounded-lg md:my-8 my-6">
+          <h1 className="text-lg font-semibold text-center">
+            Login With Email and Password
+          </h1>
+
+          <div className="my-12">
+            <p className="md:text-lg text-base font-semibold mb-4">
+              Email Address*
+            </p>
+            <input
+              type="text"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 text-lg outline-none text-sm md:text-base"
+            />
+          </div>
+          <div className="my-12">
+            <p className="md:text-lg text-base font-semibold mb-4">Password*</p>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 text-sm md:text-base outline-none"
             />
           </div>
         </section>
-        <form className="md:w-4/5 container my-center" onSubmit={handleSubmit}>
-          <section className="bg-white p-8 border border-gray-300 rounded-lg md:my-8 my-6">
-            <h1 className="text-lg font-semibold text-center">
-              Login With Email and Password
-            </h1>
-
-            <div className="my-12">
-              <p className="md:text-lg text-base font-semibold mb-4">
-                Email Address*
-              </p>
-              <input
-                type="text"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 text-lg outline-none text-sm md:text-base"
-              />
-            </div>
-            <div className="my-12">
-              <p className="md:text-lg text-base font-semibold mb-4">
-                Password*
-              </p>
-              <input
-                type="password"
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="border hover:border-gray-600 focus:border-gray-600 container rounded-lg p-2 pe-5 text-sm md:text-base outline-none"
-              />
-            </div>
-          </section>
-          <button
-            type="button"
-            className="md:p-2 p-1 md:px-4 px-2 text-xs md:text-sm action-btn2 rounded-lg mb-4 block"
-            onClick={() => {
-              router.push("/signup");
-            }}
-          >
-            Signup Instead
-          </button>
-          <button
-            type="submit"
-            className="md:p-2 p-1 md:px-4 px-2 text-xs md:text-sm action-btn rounded-lg block"
-          >
-            Login
-          </button>
-        </form>
-      </div>
-    </>
+        <button
+          type="button"
+          className="md:p-2 p-1 md:px-4 px-2 text-xs md:text-sm action-btn2 rounded-lg mb-4 block"
+          onClick={() => {
+            router.push("/signup");
+          }}
+        >
+          Signup Instead
+        </button>
+        <button
+          type="submit"
+          className="md:p-2 p-1 md:px-4 px-2 text-xs md:text-sm action-btn rounded-lg block"
+        >
+          Login
+        </button>
+      </form>
+    </div>
   );
 };
 

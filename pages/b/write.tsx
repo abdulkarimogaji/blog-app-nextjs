@@ -31,7 +31,7 @@ const Create = () => {
 
   const { mutate, isLoading } = useMutation(createBlog, {
     onSuccess: () => {
-      router.push("/users/me");
+      router.push("/u/me");
     },
   });
 
