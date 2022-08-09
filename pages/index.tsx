@@ -3,21 +3,27 @@ import { useQuery } from "react-query";
 
 import Spinner from "../components/Spinner";
 import { request } from "../utils/axios-utils";
-import { BlogType, MyResponseType } from "../utils/types";
+import { BlogType, MyResponseType, FetchBlogParams } from "../utils/types";
 import BlogList from "../components/BlogList";
-import Script from "next/script";
-import { analyse } from "../utils/analytics";
 
-const fetchBlogs = (page: number) => {
-  return request({ url: `/blogs?page=${page}&limit=10` });
+const fetchBlogs = (params: FetchBlogParams) => {
+  return request({ url: `/blogs`, params });
 };
 
 const Home = () => {
-  const [page, setPage] = useState(1);
+  const [queryParam, setQueryParam] = useState<FetchBlogParams>({
+    limit: 10,
+    page: 1,
+    sort: "relevant",
+  } as FetchBlogParams);
   const { isError, isSuccess, isLoading, data, error } = useQuery<
     MyResponseType<BlogType[]>,
     any
-  >(["blogs", page], () => fetchBlogs(page), { keepPreviousData: true });
+  >(
+    ["blogs", "", queryParam.sort, queryParam.page],
+    () => fetchBlogs(queryParam),
+    { keepPreviousData: true }
+  );
   if (isError) {
     return <div>{error.message}</div>;
   }
@@ -34,16 +40,7 @@ const Home = () => {
     });
     const blogs = data?.data.data;
 
-    return (
-      <>
-        <Script id="home-script">
-          {document.addEventListener("scroll", () => analyse("home-scroll"), {
-            once: true,
-          })}
-        </Script>
-        <BlogList blogs={blogs} tags={tags} />
-      </>
-    );
+    return <BlogList blogs={blogs} tags={tags} />;
   }
 };
 

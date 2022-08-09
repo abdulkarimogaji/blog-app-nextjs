@@ -20,13 +20,13 @@ const BlogCard = ({ data, setFilterTag }: Props) => {
     <div className="flex bg-white container rounded-sm md:p-8 p-3 md:gap-6 gap-2 border">
       <Avatar
         dimension="md:w-10 md:h-10 w-7 h-7"
-        href={`/users/${data.author._id}`}
+        href={`/u/${data.author._id}`}
         src={data.author.picture}
       />
       <div className="container">
         <p>{data.author.username}</p>
         <small>{dateToMonthDay(data.createdAt)}</small>
-        <Link href={`/blogs/${data.slug}`} passHref>
+        <Link href={`/b/${data.slug}`} passHref>
           <a className="link-hover">
             <h1 className="md:text-2xl text-base font-bold my-3">
               {data.title}
@@ -54,7 +54,7 @@ const BlogCard = ({ data, setFilterTag }: Props) => {
             </div>
             <button
               onClick={() => {
-                router.push(`/blogs/${data.slug}#comments`);
+                router.push(`/b/${data.slug}#comments`);
               }}
             >
               <FontAwesomeIcon icon={faPen} color="#777" />

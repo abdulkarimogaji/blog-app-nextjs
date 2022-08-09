@@ -1,31 +1,36 @@
 import { useRouter } from "next/router";
-import Script from "next/script";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
 import BlogList from "../../components/BlogList";
 import Spinner from "../../components/Spinner";
-import { analyse } from "../../utils/analytics";
 import { request } from "../../utils/axios-utils";
-import { BlogType, MyResponseType } from "../../utils/types";
+import { BlogType, FetchBlogParams, MyResponseType } from "../../utils/types";
 
-const fetchBlogs = (page: number, searchKey: string) => {
+const fetchBlogs = (params: FetchBlogParams) => {
   return request({
-    url: `/blogs/search?searchKey=${searchKey}&page=${page}&limit=10`,
+    url: `/blogs/search`,
+    params,
   });
 };
 
 const Home = () => {
   // for pagination
-  const [page, setPage] = useState(1);
+  const [queryParams, setQueryParams] = useState<FetchBlogParams>(
+    {} as FetchBlogParams
+  );
   const searchKey = useRouter().query.searchKey as string;
 
   const { isError, isSuccess, isLoading, data, error } = useQuery<
     MyResponseType<BlogType[]>,
     any
-  >(["blogs", searchKey, page], () => fetchBlogs(page, searchKey as string), {
-    keepPreviousData: true,
-  });
+  >(
+    ["blogs", "", queryParams.sort, queryParams.page],
+    () => fetchBlogs(queryParams),
+    {
+      keepPreviousData: true,
+    }
+  );
 
   if (isError) {
     return <div>{error.message}</div>;
@@ -42,16 +47,7 @@ const Home = () => {
       }
     });
     const blogs = data?.data.data;
-    return (
-      <>
-        <Script id="search-script">
-          {document.addEventListener("scroll", () => analyse("search-scroll"), {
-            once: true,
-          })}
-        </Script>
-        <BlogList blogs={blogs} tags={tags} searchKey={searchKey} />
-      </>
-    );
+    return <BlogList blogs={blogs} tags={tags} searchKey={searchKey} />;
   }
 };
 

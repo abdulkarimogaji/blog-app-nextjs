@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const client = axios.create({ baseURL: "https://blognado.herokuapp.com" });
+const client = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 
 export const request = ({ ...options }) => {
   const token = localStorage.getItem("blognado-access-token");

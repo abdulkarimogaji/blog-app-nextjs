@@ -54,7 +54,7 @@ const SignUp = () => {
       payload: cred,
     });
     localStorage.setItem("blognado-access-token", data.data.data.access_token);
-    router.push(`/users/me`);
+    router.push(`/u/me`);
   };
 
   const onError = (err: any) => {

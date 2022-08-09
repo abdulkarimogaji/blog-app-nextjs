@@ -56,7 +56,7 @@ const NavBar = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     router.push({
-      pathname: `/blogs/search`,
+      pathname: `/b/search`,
       query: {
         searchKey: searchTerm,
       },
@@ -109,15 +109,15 @@ const NavBar = () => {
             <li>
               <button
                 className="p-2 text-sm px-4 btn-outline border rounded-lg"
-                onClick={() => router.push("/blogs/write")}
+                onClick={() => router.push("/b/write")}
               >
                 New Blog
               </button>
             </li>
             <li>
               <Avatar
-                dimension="md:w-8 md:h-8 h-7 w-7"
-                href="/users/me"
+                dimension="md:w-12 md:h-12 h-8 w-8"
+                href="/u/me"
                 src={userData.picture}
               />
             </li>

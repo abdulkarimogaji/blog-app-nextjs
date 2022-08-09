@@ -26,9 +26,6 @@ body {
 .bg-mybg {
   background-color: hsl(206, 40%, 82%);
 }
-.profile-image {
-  left: -2rem;
-}
 
 .bg-myborder {
   border-color: hsl(206, 40%, 82%);
@@ -45,6 +42,12 @@ body {
 
 .profile-image {
   left: calc(50% - 4rem);
+}
+
+@media (max-width: 600px) {
+  .profile-image {
+    left: -2rem;
+  }
 }
 
 .my-center {
@@ -204,4 +207,18 @@ input[type="checkbox"].toggle:disabled + label::after {
   background-color: hsl(206, 40%, 82%);
   text-decoration: underline;
   color: blue;
+}
+details[open] summary ~ * {
+  animation: sweep 0.5s ease-in-out;
+}
+
+@keyframes sweep {
+  0% {
+    opacity: 0;
+    margin-left: 10px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 18px;
+  }
 }

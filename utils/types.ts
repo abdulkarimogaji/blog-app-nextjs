@@ -7,7 +7,7 @@ type Section = {
 export type Comment = {
   blog: string;
   author: User;
-  createdAt: string;
+  createdAt: Date;
   _id: string;
   text: string;
   like_count: number;
@@ -19,8 +19,8 @@ export interface BlogType {
   tags: string[];
   author: User;
   sections: Section[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   intro: Section;
   comments: Comment[];
   like_count: number;
@@ -40,8 +40,8 @@ export type LoginResponse = {
 };
 
 export interface User {
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   firstName: string;
   lastName: string;
   username: string;
@@ -52,3 +52,10 @@ export interface User {
   blogCount: number;
   comments: Comment[];
 }
+
+export type FetchBlogParams = {
+  page: number;
+  sort: "relevant" | "recent" | "viewed";
+  limit: number;
+  searchKey: string | undefined;
+};

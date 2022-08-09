@@ -6,14 +6,6 @@ type Props = {
   setFilterTag: React.Dispatch<SetStateAction<string>>;
 };
 const SideBar = ({ tags, setFilterTag }: Props) => {
-  // 128736 settings
-  // 128274 padlock
-  // 128214 open book
-  // 128163 bomb
-  // 128077 thumbs up
-  // 128071 point down
-  // 127969 house
-  // 127918 controller
   return (
     <aside className="hidden md:block w-1/3" style={{ maxWidth: "33%" }}>
       <ul className="ml-6">
@@ -36,13 +28,11 @@ const SideBar = ({ tags, setFilterTag }: Props) => {
             <span className="ml-4">Issues</span>
           </a>
         </li>
-        <li>
-          <button className="sidenav-hover container p-3 rounded-lg flex justify-start">
+        <details className="ml-4">
+          <summary className="sidenav-hover cursor-pointer container p-3 rounded-lg flex justify-start">
             <span>&#128071;</span>
             <span className="ml-4">Tags</span>
-          </button>
-        </li>
-        <ul className="ml-4">
+          </summary>
           {tags.map((tag) => (
             <li key={tag}>
               <button
@@ -53,7 +43,7 @@ const SideBar = ({ tags, setFilterTag }: Props) => {
               </button>
             </li>
           ))}
-        </ul>
+        </details>
         <li>
           <Link href="/" passHref>
             <a className="sidenav-hover block p-3 rounded-lg">

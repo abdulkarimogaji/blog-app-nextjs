@@ -8,30 +8,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 import Spinner from "../../components/Spinner";
-import { useUserContext } from "../../context/useUserContext";
 import { request } from "../../utils/axios-utils";
 import { dateToMonthDay } from "../../utils/date-utils";
 import { MyResponseType, User } from "../../utils/types";
 
-const fetchUser = (id: string) => {
-  return request({ url: `/users/${id}` });
+const fetchUser = () => {
+  return request({ url: "/users/me" });
 };
 
 const Profile = () => {
-  const { userData } = useUserContext();
   const router = useRouter();
-  const { id } = router.query;
-  useEffect(() => {
-    if (userData._id == id) {
-      router.replace("/users/me");
-    }
-  }, []);
   const { data, isSuccess, isLoading } = useQuery<MyResponseType<User>>(
-    ["user", id as string],
-    () => fetchUser(id as string)
+    ["me"],
+    fetchUser,
+    {
+      onError(err) {
+        router.push("/login");
+      },
+    }
   );
 
   if (isLoading) return <Spinner />;
@@ -53,6 +49,11 @@ const Profile = () => {
                 />
               </div>
             </div>
+            <div className="text-end">
+              <button className="p-2 text-xs px-4 action-btn2 rounded-lg">
+                Edit Profile
+              </button>
+            </div>
             <h1 className="md:text-2xl text-lg font-semibold my-4">
               {user.firstName} {user.lastName}
             </h1>
@@ -62,8 +63,8 @@ const Profile = () => {
               <FontAwesomeIcon icon={faChessBishop} color="#777" />
             </p>
           </div>
-          <div className="flex md:gap-4 gap-2 md:flex-nowrap flex-wrap container text-xs md:text-sm">
-            <div className="container md:w-1/3 bg-white border rounded-lg p-2 bg-gray-100">
+          <div className="flex md:gap-4 gap-2 flex-wrap md:flex-nowrap container text-xs md:text-sm">
+            <div className="md:w-1/3 container bg-white border rounded-lg p-2 bg-gray-100">
               <div className="my-2 p-2">
                 <FontAwesomeIcon icon={faNewspaper} color="#777" /> Blogs
                 written({user.blogCount})
@@ -73,13 +74,13 @@ const Profile = () => {
                 {user.comments.length})
               </div>
               <div className="my-2 p-2">
-                <FontAwesomeIcon icon={faHeart} color="#777" /> Tags Followed(0)
+                <FontAwesomeIcon icon={faHeart} color="#777" /> Tags Followed
               </div>
             </div>
             <div className="md:w-2/3 container bg-white border rounded-lg p-2">
               <h2 className="text-lg font-semibold mb-4">Recent Comments</h2>
               {user.comments.map((com) => (
-                <Link href={`/blogs/${com.blog}`} key={com._id} passHref>
+                <Link href={`/b/${com.blog}`} key={com._id} passHref>
                   <a className="p-2 cursor-pointer hover:bg-gray-100 focus:bg-gray-100 block">
                     {com.text}
                   </a>
