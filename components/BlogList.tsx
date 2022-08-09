@@ -54,7 +54,7 @@ const BlogList = ({ blogs, tags, searchKey }: Props) => {
   };
   var msg = getHeaderMsg();
   return (
-    <section className="flex border py-16 md:px-8 gap-4 mt-16">
+    <section className="flex border border-red-500 py-16 md:px-8 gap-4 mt-16">
       <SideBar tags={Array.from(tags)} setFilterTag={setFilterTag} />
       <div className="flex flex-col md:gap-8 gap-2 container">
         {msg && (
@@ -70,7 +70,7 @@ const BlogList = ({ blogs, tags, searchKey }: Props) => {
             )}
           </h1>
         )}
-        <ul className="flex border-b border-gray-300 block w-96 text-">
+        <ul className="flex border-b border-gray-300 block w-96 max-w-full text-">
           <li
             className={`${
               sortType == "Recent" && "font-semibold"
