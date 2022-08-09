@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { MyResponseType, User } from "../../utils/types";
-import { useQuery } from "react-query";
+import { useQuery } from '@tanstack/react-query';
 import { request } from "../../utils/axios-utils";
 
 const getUser = (token: string) => {

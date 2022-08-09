@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation } from '@tanstack/react-query';
 
 import BlogSectionForm from "../../components/BlogSectionForm";
 import Spinner from "../../components/Spinner";
