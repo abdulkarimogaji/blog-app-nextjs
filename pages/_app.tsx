@@ -1,8 +1,8 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import NavBar from "../components/NavBar";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { UserContextProvider } from "../context/useUserContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Footer from "../components/Footer";

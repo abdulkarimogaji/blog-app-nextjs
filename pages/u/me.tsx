@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
+import { useQuery } from '@tanstack/react-query';
 import Spinner from "../../components/Spinner";
 import { request } from "../../utils/axios-utils";
 import { dateToMonthDay } from "../../utils/date-utils";

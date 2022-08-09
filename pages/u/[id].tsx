@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from '@tanstack/react-query';
 import Spinner from "../../components/Spinner";
 import { useUserContext } from "../../context/useUserContext";
 import { request } from "../../utils/axios-utils";

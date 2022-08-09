@@ -5,7 +5,7 @@ import Avatar from "./Avatar";
 
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const likeComment = (id: string) => {
   return request({ url: `/comments/${id}`, method: "patch" });

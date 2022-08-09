@@ -2,7 +2,7 @@ import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faHouse, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useQuery } from "react-query";
+import { useQuery } from '@tanstack/react-query';
 import { request } from "../utils/axios-utils";
 import { BlogType } from "../utils/types";
 

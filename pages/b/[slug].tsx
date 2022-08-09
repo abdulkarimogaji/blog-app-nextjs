@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 import { useState } from "react";
 
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const fetchBlog = (slug: string) => {
   return request({ url: `/blogs/${slug}` });

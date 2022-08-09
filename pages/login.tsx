@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation } from '@tanstack/react-query';
 
 import Spinner from "../components/Spinner";
 import { useUserContext } from "../context/useUserContext";
