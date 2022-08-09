@@ -51,7 +51,7 @@ const NavBar = () => {
       }
     };
     verifylogin();
-  });
+  }, []);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
